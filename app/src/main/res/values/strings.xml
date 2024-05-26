@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Capstone</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_profile">Profile</string>
+    <string name="click_me_button">Click Me</string>
+    <string name="fragment_profile">This is profile fragment</string>
+    <string name="welcome_text">Selamat Datang</string>
+    <string name="welcome_desc1">Kami berkomitmen untuk membantu Anda memberikan nutrisi yang optimal bagi balita dan ibu hamil.</string>
+    <string name="welcome_desc2">Jelajahi konten dan temukan informasi terkini tentang gizi, resep sehat, dan tips untuk balita dan ibu hamil.</string>
+    <string name="welcome_desc3">Gunakan fitur kami untuk memantau kebutuhan gizi balita dan ibu hamil secara berkala.</string>
+    <string name="welcome_desc4">Aplikasi kami menyediakan konten yang interaktif dan edukatif. Mari jelajahi bersama!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="start">Mulai</string>
+    <string name="register">Daftar</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Konfirmasi Password</string>
+    <string name="register_text">Daftarkan diri anda</string>
+    <string name="have_account">Sudah Memiliki Akun?</string>
+    <string name="text_button_to_sign_in">Masuk</string>
+
+</resources>
