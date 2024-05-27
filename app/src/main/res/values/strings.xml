@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Capstone</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_dashboard">Analyze</string>
+    <string name="title_notifications">Tips-Tips</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_profile">Profile</string>
     <string name="click_me_button">Click Me</string>
@@ -18,9 +18,24 @@
     <string name="register">Daftar</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="full_name">Nama Lengkap</string>
+    <string name="age">Usia</string>
+    <string name="circleHand">Lingkar Lengan</string>
+    <string name="body_height">Tinggi Badan</string>
+    <string name="body_weight">Berat Badan</string>
     <string name="confirm_password">Konfirmasi Password</string>
     <string name="register_text">Daftarkan diri anda</string>
+    <string name="login_text">Selamat Datang Kembali</string>
+    <string name="login_desc">Pantau Makanan Anda untuk Keseimbangan Gizi Anda</string>
+    <string name="register_text_data">Lengkapi data diri anda</string>
     <string name="have_account">Sudah Memiliki Akun?</string>
+    <string name="dont_have_account">Belum Memiliki Akun?</string>
     <string name="text_button_to_sign_in">Masuk</string>
+    <string name="centimeter">CM</string>
+    <string name="kilogram">KG</string>
+    <string name="save">Simpan</string>
+    <string name="required">Perlu Diisi*</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
 
 </resources>

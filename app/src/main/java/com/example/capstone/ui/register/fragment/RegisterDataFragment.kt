@@ -11,19 +11,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.capstone.R
-import com.example.capstone.databinding.FragmentRegisterCredentialBinding
+import com.example.capstone.databinding.FragmentRegisterDataBinding
 import com.example.capstone.ui.login.LoginActivity
 
 
-class RegisterCredentialFragment : Fragment() {
+class RegisterDataFragment : Fragment() {
 
-    private lateinit var binding : FragmentRegisterCredentialBinding
+    private lateinit var binding : FragmentRegisterDataBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRegisterCredentialBinding.inflate(inflater, container, false)
+        binding = FragmentRegisterDataBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -31,24 +31,13 @@ class RegisterCredentialFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         drawProgressIndicator()
-        binding.buttonStart.setOnClickListener {
-            val registerDataFragment = RegisterDataFragment()
 
-            val bundle = Bundle()
-            bundle.putString(RegisterDataFragment.EXTRA_EMAIL, "email@gmail.com")
-            bundle.putString(RegisterDataFragment.EXTRA_PASSWORD, "12345678")
-
-            registerDataFragment.arguments = bundle
-
-            val fragmentManager = parentFragmentManager
-            fragmentManager?.beginTransaction()?.apply {
-                replace(R.id.main, registerDataFragment, RegisterDataFragment::class.java.simpleName)
-                addToBackStack(null)
-                commit()
-            }
+        if (arguments != null) {
+            val emailText = arguments?.getString(EXTRA_EMAIL)
+            val passwordText = arguments?.getString(EXTRA_PASSWORD)
         }
 
-        binding.textButtonSignIn.setOnClickListener {
+        binding.buttonSave.setOnClickListener {
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
         }
@@ -82,31 +71,36 @@ class RegisterCredentialFragment : Fragment() {
         mPaint.style = Paint.Style.STROKE
         mCanvas.drawLine(startX + circleRadius, startY, startX + circleRadius + circleSpacing, startY, mPaint)
 
-        // Draw the second circle (in progress)
+        // Draw the second circle (completed, similar to the first circle)
         val secondCircleCenterX = startX + circleRadius + circleSpacing
         mPaint.color = Color.parseColor("#229552")
         mPaint.style = Paint.Style.FILL
         mCanvas.drawCircle(secondCircleCenterX, startY, circleRadius, mPaint)
 
-        // Draw square inside the second circle
+        // Draw check mark in the second circle
         mPaint.color = Color.WHITE
-        mCanvas.drawRect(startX + circleRadius + circleSpacing - 20, startY - 20, startX + circleRadius + circleSpacing + 20, startY + 20, mPaint)
+        mPaint.strokeWidth = 8f
+        mPaint.style = Paint.Style.STROKE
+        mCanvas.drawLine(secondCircleCenterX - 20, startY, secondCircleCenterX, startY + 20, mPaint)
+        mCanvas.drawLine(secondCircleCenterX, startY + 20, secondCircleCenterX + 30, startY - 10, mPaint)
 
-        // Draw the line between second and third circles correctly
-
+        // Draw the line between second and third circles
         val thirdCircleCenterX = startX + circleRadius * 2 + circleSpacing * 2
         mPaint.color = Color.parseColor("#CCCCCC")
         mPaint.strokeWidth = 4f
         mPaint.style = Paint.Style.STROKE
         mCanvas.drawLine(secondCircleCenterX + circleRadius, startY, thirdCircleCenterX - circleRadius, startY, mPaint)
 
-        // Draw the third circle (not started)
-        mPaint.color = Color.parseColor("#CCCCCC")
-        mPaint.style = Paint.Style.STROKE
+        // Draw the third circle (in progress, similar to the previous second circle)
+        mPaint.color = Color.parseColor("#229552")
+        mPaint.style = Paint.Style.FILL
         mCanvas.drawCircle(thirdCircleCenterX, startY, circleRadius, mPaint)
 
+        // Draw square inside the third circle
+        mPaint.color = Color.WHITE
+        mCanvas.drawRect(thirdCircleCenterX - 20, startY - 20, thirdCircleCenterX + 20, startY + 20, mPaint)
+
         // Draw labels below each circle
-        mPaint.style = Paint.Style.FILL
         mPaint.color = Color.BLACK
         mPaint.textAlign = Paint.Align.CENTER
         mPaint.textSize = 40f
@@ -116,6 +110,12 @@ class RegisterCredentialFragment : Fragment() {
 
         // Set the bitmap to the ImageView
         binding.imageViewCustom.setImageBitmap(mBitmap)
+    }
+
+
+    companion object {
+        var EXTRA_EMAIL = "extra_email"
+        var EXTRA_PASSWORD = "extra_password"
     }
 
 
