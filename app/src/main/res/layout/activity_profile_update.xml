@@ -3,48 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.register.fragment.RegisterDataFragment">
-
-    <ImageView
-        android:id="@+id/imageViewCustom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.456"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/register_text_data"
+        android:layout_marginTop="0dp"
+        android:text="@string/profile_edit"
         android:textSize="20sp"
         style="@style/textBold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal1"
-        />
+        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal1" />
 
     <TextView
         android:id="@+id/fullnameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="32dp"
         android:text="@string/full_name"
-        style="@style/textLight"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
@@ -53,8 +34,6 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fullnameTextView"
@@ -72,10 +51,8 @@
         android:id="@+id/ageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="@string/age"
-        style="@style/textLight"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fullnameEditTextLayout" />
 
@@ -84,8 +61,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="6dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="@+id/guidelineHorizontal2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ageTextView">
@@ -102,10 +78,9 @@
         android:id="@+id/circleHandTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:text="@string/circleHand"
-        style="@style/textLight"
         app:layout_constraintStart_toStartOf="@+id/guidelineHorizontal2"
         app:layout_constraintTop_toBottomOf="@+id/fullnameEditTextLayout" />
 
@@ -114,8 +89,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guidelineHorizontal2"
         app:layout_constraintTop_toBottomOf="@+id/circleHandTextView"
@@ -134,10 +108,8 @@
         android:id="@+id/bodyheightTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="@string/body_height"
-        style="@style/textLight"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ageEditTextLayout" />
 
@@ -146,8 +118,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="6dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="@+id/guidelineHorizontal2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bodyheightTextView"
@@ -165,10 +136,9 @@
         android:id="@+id/bodyweightTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:text="@string/body_weight"
-        style="@style/textLight"
         app:layout_constraintStart_toStartOf="@+id/guidelineHorizontal2"
         app:layout_constraintTop_toBottomOf="@+id/circleHandEditTextLayout" />
 
@@ -177,7 +147,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guidelineHorizontal2"
         app:layout_constraintTop_toBottomOf="@+id/bodyweightTextView"
@@ -195,9 +165,7 @@
         android:id="@+id/buttonSave"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="40dp"
         android:text="@string/save"
         android:background="@drawable/button_primary"
         style="@style/textButton"
@@ -223,7 +191,7 @@
         android:layout_height="133dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.65"
+        app:layout_constraintGuide_begin="444dp"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline

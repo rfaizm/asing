@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".ui.tips.TipsFragment">
 
     <TextView
@@ -12,8 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/tips_title"
-        android:textStyle="bold"
-        android:textColor="@color/text_color"
+        style="@style/textBold"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/rv_tips"
         app:layout_constraintEnd_toEndOf="parent"
