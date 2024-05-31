@@ -70,6 +70,8 @@
     <string name="password_too_short">Password yang anda kurang dari 8 karakter!</string>
     <string name="history_title">Nama Makanan</string>
     <string name="description_history">Spesifikasi Nutrisinya</string>
+    <string name="analyze">Analisis</string>
+    <string name="analyze_desc">Ambil foto menggunakan kamera Anda atau dapat memilihnya melalui Gallery</string>
 
 
 </resources>

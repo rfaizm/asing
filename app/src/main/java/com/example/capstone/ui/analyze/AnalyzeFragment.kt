@@ -11,10 +11,13 @@ import android.widget.TextView
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.capstone.databinding.FragmentDashboardBinding
+import com.example.capstone.ui.ViewModelFactory
 import com.example.capstone.ui.analyze.detail.DetailAnalyzeActivity
 import com.example.capstone.ui.register.activity.RegisterActivity
+import com.example.capstone.ui.tips.TipsViewModel
 import com.example.capstone.utils.getImageUri
 
 class AnalyzeFragment : Fragment() {
@@ -25,6 +28,10 @@ class AnalyzeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private var currentImageUri: Uri? = null
+
+    private val viewModel by viewModels<AnalyzeViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +50,7 @@ class AnalyzeFragment : Fragment() {
             galleryButton.setOnClickListener { startGallery() }
             cameraButton.setOnClickListener { startCamera() }
             analyzeButton.setOnClickListener {
-                startActivity(Intent(requireActivity(), DetailAnalyzeActivity::class.java))
+                viewModel.logout()
             }
         }
     }

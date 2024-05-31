@@ -9,9 +9,5 @@ import kotlinx.coroutines.launch
 
 class TipsViewModel (private val repository : UserRepository) : ViewModel() {
 
-    fun logout() {
-        viewModelScope.launch {
-            repository.logout()
-        }
-    }
+
 }

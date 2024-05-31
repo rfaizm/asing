@@ -27,7 +27,7 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/rounded_corner"
         android:gravity="center"
-        android:text="@string/take_photo_desc"
+        android:text="@string/analyze_desc"
         android:textColor="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
