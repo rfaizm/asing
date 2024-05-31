@@ -16,7 +16,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="start">Mulai</string>
     <string name="register">Daftar</string>
-    <string name="email">Email</string>
+    <string name="email">youremail@example.com</string>
     <string name="password">Password</string>
     <string name="full_name">Nama Lengkap</string>
     <string name="age">Usia</string>
@@ -37,5 +37,16 @@
     <string name="required">Perlu Diisi*</string>
     <string name="camera">Kamera</string>
     <string name="gallery">Galeri</string>
+    <string name="tips_title">Tips - tips</string>
+    <string name="description">Deskripsi singkat</string>
+    <string name="username">Nama Lengkap Perngguna</string>
+    <string name="usia">Usia</string>
+    <string name="tinggi_badan">Tinggi Badan</string>
+    <string name="berat_badan">Berat Badan</string>
+    <string name="lingkar_lengan">Lingkar Lengan</string>
+    <string name="label">Label</string>
+    <string name="fill">fill</string>
+    <string name="edit">edit</string>
+    <string name="logout">logout</string>
 
 </resources>

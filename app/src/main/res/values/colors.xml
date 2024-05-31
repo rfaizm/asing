@@ -8,5 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#FF229552</color>
-    <color name="dark_green">#2B7533</color>
+    <color name="primary">#229552</color>
+    <color name="shades_background">#F9F9F9</color>
+    <color name="text_color">#2B2B2B</color>
+    <color name="text_color_light">#5D5D5D</color>
+    <color name="placeholder">#C1C1C1</color>
 </resources>

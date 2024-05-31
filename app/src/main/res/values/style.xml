@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="roundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="ButtonEditStyle" parent="Widget.AppCompat.Button">
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:strokeColor">@color/primary</item>
+    </style>
+
+</resources>
