@@ -1,23 +1,37 @@
 package com.example.capstone.ui.register.fragment
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.viewModels
 import com.example.capstone.R
+import com.example.capstone.data.ResultState
 import com.example.capstone.databinding.FragmentRegisterDataBinding
+import com.example.capstone.ui.ViewModelFactory
 import com.example.capstone.ui.login.LoginActivity
+import com.example.capstone.ui.register.RegisterViewModel
 
 
 class RegisterDataFragment : Fragment() {
 
     private lateinit var binding : FragmentRegisterDataBinding
+    private var email : String? = null
+    private var password : String? = null
+
+    private val viewModel by viewModels<RegisterViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,14 +47,86 @@ class RegisterDataFragment : Fragment() {
         drawProgressIndicator()
 
         if (arguments != null) {
-            val emailText = arguments?.getString(EXTRA_EMAIL)
-            val passwordText = arguments?.getString(EXTRA_PASSWORD)
+            email = arguments?.getString(EXTRA_EMAIL)
+            password = arguments?.getString(EXTRA_PASSWORD)
         }
 
         binding.buttonSave.setOnClickListener {
-            val intent = Intent(activity, LoginActivity::class.java)
-            startActivity(intent)
+            setupActionRegister()
         }
+    }
+
+    private fun setupActionRegister() {
+        val fullName = binding.fullnameEditText.text.toString()
+        val age = binding.ageEditText.text.toString().toIntOrNull()
+        val height = binding.bodyheightEditText.text.toString().toFloatOrNull()
+        val weight = binding.bodyweightEditText.text.toString().toFloatOrNull()
+        val circleHand = binding.circleHandEditText.text.toString().toFloatOrNull()
+
+        if (!TextUtils.isEmpty(fullName)
+            && !TextUtils.isEmpty(age.toString()) && !TextUtils.isEmpty(height.toString()) && !TextUtils.isEmpty(weight.toString())
+            && !TextUtils.isEmpty(circleHand.toString()))
+        {
+            viewModel.register(email!!, password!!, fullName, height!!, weight!!, age!!, circleHand!!).observe(viewLifecycleOwner) { result ->
+                if (result != null) {
+                    when (result) {
+                        is ResultState.Loading ->{
+                            showLoading(true)
+                        }
+
+                        is ResultState.Success -> {
+                            AlertDialog.Builder(requireContext()).apply {
+                                setTitle("Yeah!")
+                                setMessage("Akun dengan $email sudah jadi nih. Yuk, login dan belajar coding.")
+                                setPositiveButton("Lanjut") { _, _ ->
+                                    val intent = Intent(context, LoginActivity::class.java)
+                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    startActivity(intent)
+                                }
+                                create()
+                                show()
+                            }
+                            showLoading(false)
+                        }
+
+                        is ResultState.Error -> {
+                            showToast(result.error)
+                            showLoading(false)
+                        }
+                    }
+                }
+            }
+        } else {
+            showAlert(
+                getString(R.string.register_gagal),
+                getString(R.string.register_gagal_1)
+            ) { }
+        }
+    }
+
+    private fun showAlert(
+        title: String,
+        message: String,
+        positiveAction: (dialog: DialogInterface) -> Unit
+    ) {
+        AlertDialog.Builder(requireContext()).apply {
+            setTitle(title)
+            setMessage(message)
+            setPositiveButton("OK") { dialog, _ ->
+                positiveAction.invoke(dialog)
+            }
+            setCancelable(false)
+            create()
+            show()
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun drawProgressIndicator() {
@@ -111,7 +197,6 @@ class RegisterDataFragment : Fragment() {
         // Set the bitmap to the ImageView
         binding.imageViewCustom.setImageBitmap(mBitmap)
     }
-
 
     companion object {
         var EXTRA_EMAIL = "extra_email"

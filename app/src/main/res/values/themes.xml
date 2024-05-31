@@ -15,5 +15,9 @@
         <item name="titleTextColor">@color/white</item>
     </style>
 
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
+        <item name="colorPrimary">@android:color/transparent</item>
+    </style>
+
 </resources>
 
