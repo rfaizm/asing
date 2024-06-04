@@ -28,6 +28,7 @@
     <string name="login_text">Selamat Datang Kembali</string>
     <string name="login_desc">Pantau Makanan Anda untuk Keseimbangan Gizi Anda</string>
     <string name="register_text_data">Lengkapi data diri anda</string>
+    <string name="analyze_desc">Ambil foto menggunakan kamera Anda atau dapat memilihnya melalui Gallery</string>
     <string name="have_account">Sudah Memiliki Akun?</string>
     <string name="dont_have_account">Belum Memiliki Akun?</string>
     <string name="text_button_to_sign_in">Masuk</string>
@@ -38,6 +39,7 @@
     <string name="camera">Kamera</string>
     <string name="gallery">Galeri</string>
     <string name="tips_title">Tips - tips</string>
+    <string name="analyze">Analisis</string>
     <string name="description">Deskripsi singkat</string>
     <string name="username">Nama Lengkap Perngguna</string>
     <string name="usia">Usia</string>
@@ -46,7 +48,31 @@
     <string name="lingkar_lengan">Lingkar Lengan</string>
     <string name="label">Label</string>
     <string name="fill">fill</string>
-    <string name="edit">edit</string>
+    <string name="edit">Edit</string>
     <string name="logout">logout</string>
+    <string name="result">Hasil</string>
+    <string name="result_generate">Ayam</string>
+    <string name="nutrition">Nutrisi</string>
+    <string name="nutrition_generate">Kalori: 261.5 kkal</string>
+    <string name="score">Confidence Score</string>
+    <string name="score_generate">64%</string>
+    <string name="eat_progress">Progress Makan</string>
+    <string name="calories">150/300</string>
+    <string name="desc_calories">kkal</string>
+    <string name="kalori">Kalori</string>
+    <string name="eat_progress_background">Lengkapi Makan Anda untuk memenuhi kebutuhan gizi Anda</string>
+    <string name="history">Riwayat</string>
+    <string name="history_background">Ayo pindai makanan anda!</string>
+    <string name="history_title">Nama Makanan</string>
+    <string name="description_history">Spesifikasi Nutrisinya</string>
+    <string name="login_failed">Login Gagal</string>
+    <string name="login_failed_data">Login Gagal, Masukkan data dengan benar!</string>
+    <string name="update_gagal">Update Gagal</string>
+    <string name="update_gagal_empty">Update Gagal, Masukkan data dengan benar!</string>
+    <string name="register_gagal">Registrasi Gagal</string>
+    <string name="register_gagal_1">Registrasi Gagal, Masukkan data dengan benar!</string>
+    <string name="register_gagal_2">Password yang anda masukkan tidak sama!</string>
+    <string name="password_too_short">Password yang anda kurang dari 8 karakter!</string>
+    <string name="kosong"> </string>
 
 </resources>

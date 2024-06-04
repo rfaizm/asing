@@ -13,14 +13,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.viewModels
 import com.example.capstone.R
 import com.example.capstone.data.ResultState
 import com.example.capstone.databinding.ActivityProfileUpdateBinding
 import com.example.capstone.ui.ViewModelFactory
-import com.example.capstone.ui.login.LoginActivity
 import com.example.capstone.ui.main.MainActivity
-import com.example.capstone.ui.profile.ProfileFragment
 import com.example.capstone.ui.profile.ProfileViewModel
 
 class ProfileUpdateActivity : AppCompatActivity() {
@@ -36,7 +33,7 @@ class ProfileUpdateActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityProfileUpdateBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets

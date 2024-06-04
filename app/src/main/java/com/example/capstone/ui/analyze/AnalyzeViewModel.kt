@@ -9,9 +9,5 @@ import kotlinx.coroutines.launch
 
 class AnalyzeViewModel(private val repository : UserRepository)  : ViewModel() {
 
-    fun logout() {
-        viewModelScope.launch {
-            repository.logout()
-        }
-    }
+
 }
