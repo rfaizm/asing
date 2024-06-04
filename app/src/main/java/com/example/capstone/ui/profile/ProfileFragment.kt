@@ -96,8 +96,8 @@ class ProfileFragment : Fragment() {
                     }
 
                     is ResultState.Success -> {
-                        showLoading(false)
                         viewModel.logout()
+                        showLoading(false)
                     }
 
                     is ResultState.Error -> {
