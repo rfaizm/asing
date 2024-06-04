@@ -63,8 +63,10 @@
     <string name="score_generate">64%</string>
     <string name="kosong"> </string>
     <string name="register_gagal">Registrasi Gagal</string>
+    <string name="update_gagal">Update Gagal</string>
     <string name="login_failed">Login Gagal</string>
     <string name="register_gagal_1">Registrasi Gagal, Masukkan data dengan benar!</string>
+    <string name="update_gagal_empty">Update Gagal, Masukkan data dengan benar!</string>
     <string name="login_failed_data">Login Gagal, Masukkan data dengan benar!</string>
     <string name="register_gagal_2">Password yang anda masukkan tidak sama!</string>
     <string name="password_too_short">Password yang anda kurang dari 8 karakter!</string>

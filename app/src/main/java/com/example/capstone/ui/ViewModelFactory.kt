@@ -8,6 +8,7 @@ import com.example.capstone.di.Injection
 import com.example.capstone.ui.analyze.AnalyzeViewModel
 import com.example.capstone.ui.login.LoginViewModel
 import com.example.capstone.ui.main.MainViewModel
+import com.example.capstone.ui.profile.ProfileViewModel
 import com.example.capstone.ui.register.RegisterViewModel
 import com.example.capstone.ui.tips.TipsViewModel
 
@@ -33,6 +34,10 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
 
             modelClass.isAssignableFrom(AnalyzeViewModel::class.java) -> {
                 AnalyzeViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
+                ProfileViewModel(repository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

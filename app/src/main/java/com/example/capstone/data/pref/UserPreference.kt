@@ -23,6 +23,7 @@ class UserPreference(private val dataStore: DataStore<Preferences>) {
         dataStore.edit { preferences ->
             preferences[ID_KEY] = user.userId
             preferences[PHOTO_KEY] = user.photoUrl
+            preferences[EMAIL_KEY] = user.email
             preferences[NAME_KEY] = user.name
             preferences[HEIGHT_KEY] = user.height
             preferences[WEIGHT_KEY] = user.weight
@@ -33,11 +34,22 @@ class UserPreference(private val dataStore: DataStore<Preferences>) {
         }
     }
 
+    suspend fun updateSession(user: UpdateModel) {
+        dataStore.edit { preferences ->
+            preferences[NAME_KEY] = user.name
+            preferences[HEIGHT_KEY] = user.height
+            preferences[WEIGHT_KEY] = user.weight
+            preferences[AGE_KEY] = user.age
+            preferences[HAND_KEY] = user.handCircle
+        }
+    }
+
     fun getSession(): Flow<UserModel> {
         return dataStore.data.map { preferences ->
             UserModel(
                 preferences[ID_KEY] ?: "",
                 preferences[PHOTO_KEY] ?: "",
+                preferences[EMAIL_KEY] ?: "",
                 preferences[NAME_KEY] ?: "",
                 preferences[HEIGHT_KEY] ?: 0f,
                 preferences[WEIGHT_KEY] ?: 0f,
@@ -56,12 +68,19 @@ class UserPreference(private val dataStore: DataStore<Preferences>) {
         }
     }
 
+    fun getAuthToken(): String? {
+        return runBlocking {
+            dataStore.data.first()[TOKEN_KEY]
+        }
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: UserPreference? = null
 
         private val ID_KEY = stringPreferencesKey("userId")
         private val PHOTO_KEY = stringPreferencesKey("photoUrl")
+        private val EMAIL_KEY = stringPreferencesKey("email")
         private val NAME_KEY = stringPreferencesKey("name")
         private val HEIGHT_KEY = floatPreferencesKey("height")
         private val WEIGHT_KEY = floatPreferencesKey("weight")

@@ -50,7 +50,7 @@ class AnalyzeFragment : Fragment() {
             galleryButton.setOnClickListener { startGallery() }
             cameraButton.setOnClickListener { startCamera() }
             analyzeButton.setOnClickListener {
-                viewModel.logout()
+                startActivity(Intent(requireContext(), DetailAnalyzeActivity::class.java))
             }
         }
     }
