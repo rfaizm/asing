@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,21 +20,44 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal1" />
+=======
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.detail.ProfileUpdateActivity">
+>>>>>>> origin/mobile
 
     <TextView
         android:id="@+id/fullnameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_marginTop="32dp"
         android:text="@string/full_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+=======
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="44dp"
+        android:text="@string/full_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guidelineHorizontal1" />
+>>>>>>> origin/mobile
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fullnameEditTextLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
+=======
+        android:layout_marginStart="32dp"
+        app:cursorColor="@color/green"
+        app:boxStrokeColor="@color/green"
+        android:layout_marginEnd="32dp"
+>>>>>>> origin/mobile
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fullnameTextView"
@@ -47,11 +71,20 @@
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/mobile
     <TextView
         android:id="@+id/ageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_marginTop="24dp"
+=======
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+>>>>>>> origin/mobile
         android:text="@string/age"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fullnameEditTextLayout" />
@@ -61,7 +94,14 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_marginEnd="8dp"
+=======
+        android:layout_marginEnd="6dp"
+        app:cursorColor="@color/green"
+        app:boxStrokeColor="@color/green"
+        android:layout_marginStart="32dp"
+>>>>>>> origin/mobile
         app:layout_constraintEnd_toEndOf="@+id/guidelineHorizontal2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ageTextView">
@@ -78,8 +118,13 @@
         android:id="@+id/circleHandTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
+=======
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="32dp"
+>>>>>>> origin/mobile
         android:text="@string/circleHand"
         app:layout_constraintStart_toStartOf="@+id/guidelineHorizontal2"
         app:layout_constraintTop_toBottomOf="@+id/fullnameEditTextLayout" />
@@ -89,7 +134,13 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_marginStart="8dp"
+=======
+        app:cursorColor="@color/green"
+        app:boxStrokeColor="@color/green"
+        android:layout_marginEnd="32dp"
+>>>>>>> origin/mobile
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guidelineHorizontal2"
         app:layout_constraintTop_toBottomOf="@+id/circleHandTextView"
@@ -108,7 +159,12 @@
         android:id="@+id/bodyheightTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_marginTop="24dp"
+=======
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+>>>>>>> origin/mobile
         android:text="@string/body_height"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ageEditTextLayout" />
@@ -118,7 +174,14 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_marginEnd="8dp"
+=======
+        android:layout_marginEnd="6dp"
+        android:layout_marginStart="32dp"
+        app:cursorColor="@color/green"
+        app:boxStrokeColor="@color/green"
+>>>>>>> origin/mobile
         app:layout_constraintEnd_toEndOf="@+id/guidelineHorizontal2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bodyheightTextView"
@@ -136,8 +199,13 @@
         android:id="@+id/bodyweightTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
+=======
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="32dp"
+>>>>>>> origin/mobile
         android:text="@string/body_weight"
         app:layout_constraintStart_toStartOf="@+id/guidelineHorizontal2"
         app:layout_constraintTop_toBottomOf="@+id/circleHandEditTextLayout" />
@@ -147,7 +215,13 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_marginStart="8dp"
+=======
+        app:cursorColor="@color/green"
+        app:boxStrokeColor="@color/green"
+        android:layout_marginEnd="32dp"
+>>>>>>> origin/mobile
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guidelineHorizontal2"
         app:layout_constraintTop_toBottomOf="@+id/bodyweightTextView"
@@ -165,10 +239,18 @@
         android:id="@+id/buttonSave"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_marginTop="40dp"
         android:text="@string/save"
         android:background="@drawable/button_primary"
         style="@style/textButton"
+=======
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/save"
+        style="@style/ButtonEditStyle"
+>>>>>>> origin/mobile
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -176,6 +258,20 @@
         app:layout_constraintTop_toBottomOf="@+id/guidelineHorizontal3"
         app:layout_constraintVertical_bias="0.005" />
 
+<<<<<<< HEAD
+=======
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:indicatorColor="@color/green"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+>>>>>>> origin/mobile
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHorizontal1"
         android:layout_width="358dp"
@@ -191,7 +287,11 @@
         android:layout_height="133dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+<<<<<<< HEAD
         app:layout_constraintGuide_begin="444dp"
+=======
+        app:layout_constraintGuide_percent="0.65"
+>>>>>>> origin/mobile
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -202,4 +302,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintGuide_percent="0.5"
         app:layout_constraintStart_toStartOf="parent" />
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/mobile
 </androidx.constraintlayout.widget.ConstraintLayout>

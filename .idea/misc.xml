@@ -16,4 +16,11 @@
     <output url="file://$PROJECT_DIR$/out" />
 >>>>>>> Stashed changes
   </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.33" />
+      </ProjectState>
+    </option>
+  </component>
 </project>

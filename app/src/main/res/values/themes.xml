@@ -38,5 +38,9 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">@android:color/transparent</item>
+    </style>
+
 </resources>
 

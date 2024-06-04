@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="16dp"
-    android:background="@color/white">
+    android:background="#FFFFFFF">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_image_user"
@@ -21,12 +21,12 @@
         android:id="@+id/tv_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_below="@id/iv_image_user"
         android:layout_centerHorizontal="true"
-        style="@style/textBold"
-        android:textSize="16sp"
+        android:layout_marginTop="24dp"
         android:text="@string/username"
+        android:textStyle="bold"
+        android:textColor="@color/text_color"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -37,13 +37,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:text="@string/email"
-        style="@style/textLight"
+        android:textColor="@color/text_color_light"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_data"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="280dp"
         android:layout_below="@id/tv_email"
         android:layout_marginTop="24dp"
         tools:listitem="@layout/item_data"/>
@@ -54,22 +54,14 @@
         android:layout_height="48dp"
         android:layout_below="@+id/rv_data"
         android:layout_marginTop="24dp"
-        android:text="@string/edit"
-        style="@style/textButton"
-        android:background="@drawable/button_primary"/>
+        android:text="@string/edit"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_logout"
+    <Button
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_below="@+id/btn_edit"
         android:layout_marginTop="8dp"
-        android:background="@drawable/button_secondary"
-        android:text="@string/logout"
-        style="@style/textButton"
-        android:textColor="@color/primary"
-        android:stateListAnimator="@null"
-        android:elevation="0dp"
-        android:translationZ="0dp"/>
+        style="@style/ButtonEditStyle"
+        android:text="@string/logout"/>
 
 </RelativeLayout>

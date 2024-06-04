@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context=".ui.analyze.AnalyzeFragment">
 
     <ImageView
         android:id="@+id/previewImageView"
-        android:layout_width="320dp"
-        android:layout_height="320dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,15 +20,13 @@
 
     <TextView
         android:id="@+id/titleTextView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:gravity="center"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:padding="16dp"
-        android:text="@string/analyze_hint"
-        android:textAlignment="textStart"
-        android:fontFamily="@font/manrope_semi_bold"
-        android:textColor="@color/primary"
-        android:background="@drawable/highlight"
+        android:layout_marginEnd="32dp"
+        android:text="@string/register_text_data"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,42 +38,26 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginTop="16dp"
         android:text="@string/camera"
-        android:background="@drawable/button_primary"
-        style="@style/textButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/galleryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="4dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/button_secondary"
+        android:layout_marginTop="16dp"
         android:text="@string/gallery"
-        android:textColor="@color/primary"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal3"
         app:layout_constraintEnd_toEndOf="@+id/guidelineVertical"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
-
-    <Button
-        android:id="@+id/analyzeButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/analyze"
-        android:background="@drawable/button_primary"
-        style="@style/textButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guidelineVertical"
-        app:layout_constraintTop_toBottomOf="@+id/guidelineHorizontal3" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHorizontal1"
@@ -91,7 +74,7 @@
         android:layout_height="133dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_end="320dp"
+        app:layout_constraintGuide_percent="0.45"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -101,14 +84,5 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintGuide_percent="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHorizontal3"
-        android:layout_width="358dp"
-        android:layout_height="90dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_end="168dp"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
