@@ -74,5 +74,8 @@
     <string name="register_gagal_2">Password yang anda masukkan tidak sama!</string>
     <string name="password_too_short">Password yang anda kurang dari 8 karakter!</string>
     <string name="kosong"> </string>
+    <string name="empty_image_warning">Silakan masukkan berkas gambar terlebih dahulu.</string>
+    <string name="recomend">DIREKOMENDASIKAN</string>
+    <string name="error_null_data">NULL</string>
 
 </resources>

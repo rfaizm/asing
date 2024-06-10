@@ -40,6 +40,10 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
                 ProfileViewModel(repository) as T
             }
 
+            modelClass.isAssignableFrom(SharedViewModel::class.java) -> {
+                SharedViewModel() as T
+            }
+
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

@@ -18,6 +18,14 @@
         app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal1"
         app:srcCompat="@drawable/ic_place_holder" />
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:layout_alignParentTop="true" />
+
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"

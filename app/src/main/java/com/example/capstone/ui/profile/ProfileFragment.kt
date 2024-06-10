@@ -101,14 +101,14 @@ class ProfileFragment : Fragment() {
                     }
 
                     is ResultState.Error -> {
-                        showToast(result.error)
-//                        if (result.error == "Token maximum age exceeded") {
-//                            val intent = Intent(activity, LoginActivity::class.java)
-//                            startActivity(intent)
-//                            viewModel.logout()
-//                        }
+                        if (result.error == "Session ended, please login again") {
+                            viewModel.logout()
+                        } else {
+                            showToast(result.error)
+                        }
                         showLoading(false)
                     }
+
                 }
             }
 

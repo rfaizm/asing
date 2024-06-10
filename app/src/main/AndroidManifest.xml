@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -18,10 +20,13 @@
         android:theme="@style/Theme.Capstone"
         tools:targetApi="31">
         <activity
-            android:name=".ui.profile.detail.ProfileUpdateActivity"
-            android:parentActivityName=".ui.main.MainActivity"
-            android:label="@string/kosong"
+            android:name=".ui.camera.CameraActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.profile.detail.ProfileUpdateActivity"
+            android:exported="false"
+            android:label="@string/kosong"
+            android:parentActivityName=".ui.main.MainActivity" />
         <activity
             android:name=".ui.analyze.detail.DetailAnalyzeActivity"
             android:exported="false"
