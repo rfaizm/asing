@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class TipsResponse(
 
 	@field:SerializedName("data")
-	val data: Data? = null,
+	val data: List<Data>? = null,
 
 	@field:SerializedName("status")
 	val status: String? = null

@@ -6,6 +6,7 @@ import com.example.capstone.data.api.response.NutriotionResponse
 import com.example.capstone.data.api.response.PredictResponse
 import com.example.capstone.data.api.response.ProfileResponse
 import com.example.capstone.data.api.response.RegisterResponse
+import com.example.capstone.data.api.response.TipsResponse
 import okhttp3.MultipartBody
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -64,5 +65,11 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("name") name: String,
     ) : NutriotionResponse
+
+    @GET("tips/{id}")
+    suspend fun getTips(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): TipsResponse
 
 }

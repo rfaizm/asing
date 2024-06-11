@@ -18,6 +18,7 @@
         android:text="@string/eat_progress"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/text_color"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -110,7 +111,8 @@
     <TextView
         android:id="@+id/eatProgressDesc"
         android:layout_width="match_parent"
-        android:layout_height="68dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
@@ -119,6 +121,7 @@
         android:gravity="center"
         android:text="@string/eat_progress_background"
         android:textColor="@color/green"
+        android:fontFamily="@font/manrope_medium"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -136,6 +139,7 @@
         android:text="@string/history"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal2" />

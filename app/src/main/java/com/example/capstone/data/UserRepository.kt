@@ -8,6 +8,7 @@ import com.example.capstone.data.api.response.NutriotionResponse
 import com.example.capstone.data.api.response.PredictResponse
 import com.example.capstone.data.api.response.ProfileResponse
 import com.example.capstone.data.api.response.RegisterResponse
+import com.example.capstone.data.api.response.TipsResponse
 import com.example.capstone.data.pref.UpdateModel
 import com.example.capstone.data.pref.UserModel
 import com.example.capstone.data.pref.UserPreference
@@ -119,6 +120,20 @@ class UserRepository private constructor(
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, NutriotionResponse::class.java)
+            emit(ResultState.Error(errorResponse.status!!))
+        }
+    }
+
+    fun getTips() = liveData {
+        emit(ResultState.Loading)
+
+        try {
+            val token = userPreference.getAuthToken()
+            val successResponse = apiService.getTips("Bearer $token", "id_tips")
+            emit(ResultState.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, TipsResponse::class.java)
             emit(ResultState.Error(errorResponse.status!!))
         }
     }
