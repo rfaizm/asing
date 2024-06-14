@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 data class TipsResponse(
 
 	@field:SerializedName("data")
-	val data: List<Data>? = null,
+	val data: List<DataItem?>? = null,
 
 	@field:SerializedName("status")
 	val status: String? = null
 )
 
-data class Data(
+data class DataItem(
 
 	@field:SerializedName("image")
 	val image: String? = null,

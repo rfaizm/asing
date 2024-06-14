@@ -1,5 +1,6 @@
 package com.example.capstone.data
 
+import android.util.Log
 import androidx.lifecycle.liveData
 import com.example.capstone.data.api.config.ApiService
 import com.example.capstone.data.api.response.LoginResponse
@@ -13,6 +14,7 @@ import com.example.capstone.data.pref.UpdateModel
 import com.example.capstone.data.pref.UserModel
 import com.example.capstone.data.pref.UserPreference
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -124,17 +126,26 @@ class UserRepository private constructor(
         }
     }
 
-    fun getTips() = liveData {
+    suspend fun getAllTips() = liveData(Dispatchers.IO) {
         emit(ResultState.Loading)
-
         try {
             val token = userPreference.getAuthToken()
-            val successResponse = apiService.getTips("Bearer $token", "id_tips")
-            emit(ResultState.Success(successResponse))
+            val response = apiService.getAllTips(token = "Bearer $token").execute()
+            if (response.isSuccessful) {
+                val data = response.body()?.data
+                if (data != null) {
+                    emit(ResultState.Success(data))
+                } else {
+                    emit(ResultState.Error("Error: Data is null"))
+                }
+            } else {
+                emit(ResultState.Error("Error: Response unsuccessful"))
+                Log.e("API_ERROR", "Code: ${response.code()}, Message: ${response.message()}")
+            }
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, TipsResponse::class.java)
-            emit(ResultState.Error(errorResponse.status!!))
+            emit(ResultState.Error(errorResponse.status ?: "Unknown Error"))
         }
     }
 

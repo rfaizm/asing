@@ -42,11 +42,10 @@ class TipsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeData()
-        viewModel.loadTips()
     }
 
     private fun setupRecyclerView() {
-        tipsAdapter = TipsAdapter(listOf())
+        tipsAdapter = TipsAdapter()
         binding.rvTips.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = tipsAdapter
@@ -56,18 +55,32 @@ class TipsFragment : Fragment() {
     private fun observeData() {
         viewModel.tipsLiveData.observe(viewLifecycleOwner) { resultState ->
             when (resultState) {
+                is ResultState.Loading -> {
+                    showLoading(true)
+                }
                 is ResultState.Success -> {
-                    tipsAdapter.updateData(resultState.data)
+                    showLoading(false)
+                    resultState.data?.let { dataList ->
+                        tipsAdapter.tipsList = dataList.filterNotNull()
+                    } ?: run {
+                        showToast("No tips available")
+                    }
                 }
                 is ResultState.Error -> {
-                    Toast.makeText(context, "Error: ${resultState.error}", Toast.LENGTH_LONG).show()
-                }
-                is ResultState.Loading -> {
+                    showLoading(false)
+                    showToast(resultState.error)
                 }
             }
         }
     }
 
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="116dp">
 
-
     <ImageView
         android:id="@+id/iv_tips"
         android:layout_width="100dp"
