@@ -6,11 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Room
-import com.example.capstone.data.local.room.AnalyzeDatabase
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import com.example.capstone.databinding.FragmentHomeBinding
 import com.example.capstone.ui.SharedViewModel
 import java.text.SimpleDateFormat
@@ -27,10 +23,6 @@ class HomeFragment : Fragment() {
         requireContext().getSharedPreferences("home_fragment_prefs", Context.MODE_PRIVATE)
     }
 
-    private lateinit var database:AnalyzeDatabase
-    private lateinit var adapter:HistoryAdapter
-    private lateinit var historyViewModel: HistoryViewModel
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,24 +31,10 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
-        val root: View = binding.root
-
-        adapter = HistoryAdapter()
-        binding.rvHistory.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = adapter
-        }
-
-        historyViewModel.historyList.observe(viewLifecycleOwner, { historyList ->
-            adapter.submitList(historyList)
-        })
-
-        return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        database = Room.databaseBuilder(requireContext(), AnalyzeDatabase::class.java, "history_database").build()
         checkAndResetProgress()
         setupObservers()
         setupCircularProgressBar()

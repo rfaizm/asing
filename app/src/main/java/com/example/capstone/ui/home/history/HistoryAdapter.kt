@@ -1,4 +1,4 @@
-package com.example.capstone.ui.home
+package com.example.capstone.ui.home.history
 
 import android.net.Uri
 import android.view.LayoutInflater

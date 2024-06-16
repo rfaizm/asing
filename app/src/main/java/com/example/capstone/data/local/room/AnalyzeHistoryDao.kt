@@ -11,9 +11,6 @@ import com.example.capstone.data.local.entity.AnalyzeHistory
         @Insert
         fun insert(history: AnalyzeHistory)
 
-        @Query("SELECT * FROM analyze_history WHERE user_id = :userId")
-        fun getHistoryByUserId(userId: Int): LiveData<List<AnalyzeHistory>>
-
         @Query("SELECT * FROM analyze_history")
         fun getAllAnalyses(): LiveData<List<AnalyzeHistory>>
     }

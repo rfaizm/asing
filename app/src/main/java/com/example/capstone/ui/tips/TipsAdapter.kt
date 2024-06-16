@@ -8,8 +8,11 @@ import com.bumptech.glide.Glide
 import com.example.capstone.data.api.response.DataItem
 import com.example.capstone.databinding.ItemTipsBinding
 
-class TipsAdapter : RecyclerView.Adapter<TipsAdapter.TipsViewHolder>() {
-    private var _tipsList = mutableListOf<DataItem>()
+class TipsAdapter(
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<TipsAdapter.TipsViewHolder>() {
+
+    private val _tipsList = mutableListOf<DataItem>()
 
     var tipsList: List<DataItem>
         get() = _tipsList
@@ -35,6 +38,15 @@ class TipsAdapter : RecyclerView.Adapter<TipsAdapter.TipsViewHolder>() {
     override fun getItemCount() = _tipsList.size
 
     inner class TipsViewHolder(private val binding: ItemTipsBinding) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(_tipsList[position])
+                }
+            }
+        }
+
         fun bind(tip: DataItem) {
             with(binding) {
                 tvTipsTitle.text = tip.title
@@ -44,6 +56,10 @@ class TipsAdapter : RecyclerView.Adapter<TipsAdapter.TipsViewHolder>() {
                 }
             }
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(tip: DataItem)
     }
 }
 

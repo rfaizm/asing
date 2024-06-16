@@ -1,6 +1,5 @@
 package com.example.capstone.ui.analyze.detail
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -11,19 +10,24 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.viewModels
+import androidx.room.Room
 import com.example.capstone.R
 import com.example.capstone.data.ResultState
 import com.example.capstone.data.api.response.DataPredict
+import com.example.capstone.data.local.entity.AnalyzeHistory
+import com.example.capstone.data.local.room.AnalyzeDatabase
 import com.example.capstone.databinding.ActivityDetailAnalyzeBinding
 import com.example.capstone.ui.SharedViewModel
 import com.example.capstone.ui.ViewModelFactory
 import com.example.capstone.ui.analyze.AnalyzeViewModel
-import com.example.capstone.ui.home.HomeFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class DetailAnalyzeActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityDetailAnalyzeBinding
+    private lateinit var database: AnalyzeDatabase
 
     private val viewModel by viewModels<AnalyzeViewModel> {
         ViewModelFactory.getInstance(this)
@@ -39,6 +43,33 @@ class DetailAnalyzeActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        database = Room.databaseBuilder(applicationContext, AnalyzeDatabase::class.java, "riwayat_database").build()
+
+        val analyzeResult = intent.getStringExtra("PREDICTION_RESULT")
+        val nutrition = intent.getStringExtra("NUTRITION")
+        val confidenceScore = intent.getStringExtra("CONFIDENCE_SCORE") ?: "0"
+        val imageUriString = intent.getStringExtra("IMAGE_URI")
+
+        if (analyzeResult != null && imageUriString != null) {
+            binding.titleTextView.text = analyzeResult
+            binding.descResultTextView.text = nutrition
+            binding.descScoreTextView.text = confidenceScore
+            binding.previewImageView.setImageURI(Uri.parse(imageUriString))
+
+            if (nutrition != null) {
+                saveAnalyzeToDatabase(imageUriString, analyzeResult, nutrition, confidenceScore)
+            }
+        } else {
+            showToast("Informasi tidak lengkap untuk disimpan.")
+        }
+
+        val imageUri = Uri.parse(imageUriString)
+        if (imageUri != null) {
+            binding.previewImageView.setImageURI(imageUri)
+        } else {
+            showToast("Gagal memuat gambar.")
         }
 
         setupAction()
@@ -82,6 +113,19 @@ class DetailAnalyzeActivity : AppCompatActivity() {
                 }
             }
 
+        }
+    }
+
+    private fun saveAnalyzeToDatabase(imageUri: String, analyzeResult: String, nutrition: String, confidenceScore : String) {
+        val history = AnalyzeHistory(
+            imageUri = imageUri,
+            analyzeResult = analyzeResult,
+            nutrition = nutrition,
+            confidenceScore = confidenceScore.replace("%", "").toFloatOrNull() ?: 0f
+        )
+
+        CoroutineScope(Dispatchers.IO).launch {
+            database.analyzeHistoryDao().insert(history)
         }
     }
 

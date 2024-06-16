@@ -1,5 +1,6 @@
 package com.example.capstone.data.api.config
 
+import com.example.capstone.data.api.response.DetailTipsResponse
 import com.example.capstone.data.api.response.LoginResponse
 import com.example.capstone.data.api.response.LogoutResponse
 import com.example.capstone.data.api.response.NutriotionResponse
@@ -71,4 +72,10 @@ interface ApiService {
     fun getAllTips(
         @Header("Authorization") token: String
     ): Call<TipsResponse>
+
+    @GET("tips/{id}")
+    fun getDetailTips(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): Call<DetailTipsResponse>
 }

@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "analyze_history")
 data class AnalyzeHistory (
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    @ColumnInfo(name = "user_id") val userId: Int,
     @ColumnInfo(name = "image_uri") val imageUri: String,
     @ColumnInfo(name = "analyze_result") val analyzeResult: String,
     @ColumnInfo(name = "nutrition") val nutrition: String,

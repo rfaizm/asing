@@ -11,6 +11,7 @@ import com.example.capstone.ui.main.MainViewModel
 import com.example.capstone.ui.profile.ProfileViewModel
 import com.example.capstone.ui.register.RegisterViewModel
 import com.example.capstone.ui.tips.TipsViewModel
+import com.example.capstone.ui.tips.detail.DetailTipsViewModel
 
 class ViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
@@ -42,6 +43,10 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
 
             modelClass.isAssignableFrom(SharedViewModel::class.java) -> {
                 SharedViewModel() as T
+            }
+
+            modelClass.isAssignableFrom(DetailTipsViewModel::class.java) -> {
+                DetailTipsViewModel(repository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

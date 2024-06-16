@@ -1,8 +1,10 @@
 package com.example.capstone.data
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.capstone.data.api.config.ApiService
+import com.example.capstone.data.api.response.Data
 import com.example.capstone.data.api.response.LoginResponse
 import com.example.capstone.data.api.response.LogoutResponse
 import com.example.capstone.data.api.response.NutriotionResponse
@@ -16,6 +18,7 @@ import com.example.capstone.data.pref.UserPreference
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -146,6 +149,34 @@ class UserRepository private constructor(
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, TipsResponse::class.java)
             emit(ResultState.Error(errorResponse.status ?: "Unknown Error"))
+        }
+    }
+
+    suspend fun getDetailTips(tipId: String): LiveData<ResultState<Data>> = liveData {
+        emit(ResultState.Loading)
+        try {
+            val token = userPreference.getAuthToken()
+            Log.d("UserRepository", "Token: $token, Tip ID: $tipId")
+
+            val response = withContext(Dispatchers.IO) {
+                apiService.getDetailTips("Bearer $token", tipId).execute()
+            }
+
+            if (response.isSuccessful) {
+                val detailTipsResponse = response.body()
+                val data = detailTipsResponse?.data
+                Log.d("UserRepository", "Response Data: $data")
+                if (data != null) {
+                    emit(ResultState.Success(data))
+                } else {
+                    emit(ResultState.Error("Error: Data is null"))
+                }
+            } else {
+                emit(ResultState.Error("Error: Response unsuccessful"))
+            }
+        } catch (e: Exception) {
+            Log.e("UserRepository", "Exception: ${e.message}")
+            emit(ResultState.Error(e.message ?: "Unknown Error"))
         }
     }
 
