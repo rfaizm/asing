@@ -27,6 +27,16 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="roundedImageViewHalf">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8%</item>
+    </style>
+
+    <style name="roundedImageViewPart">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">4%</item>
+    </style>
+
     <style name="textLight">
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textSize">14sp</item>

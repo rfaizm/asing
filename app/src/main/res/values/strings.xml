@@ -77,5 +77,6 @@
     <string name="empty_image_warning">Silakan masukkan berkas gambar terlebih dahulu.</string>
     <string name="recomend">DIREKOMENDASIKAN</string>
     <string name="error_null_data">NULL</string>
+    <string name="update_profile">Edit Data Diri</string>
 
 </resources>
