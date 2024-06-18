@@ -3,6 +3,7 @@ package com.example.capstone.ui.analyze.detail
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -10,7 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.room.Room
+import androidx.lifecycle.ViewModelProvider
 import com.example.capstone.R
 import com.example.capstone.data.ResultState
 import com.example.capstone.data.api.response.DataPredict
@@ -20,14 +21,13 @@ import com.example.capstone.databinding.ActivityDetailAnalyzeBinding
 import com.example.capstone.ui.SharedViewModel
 import com.example.capstone.ui.ViewModelFactory
 import com.example.capstone.ui.analyze.AnalyzeViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.capstone.ui.home.history.HistoryViewModel
 
 class DetailAnalyzeActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityDetailAnalyzeBinding
     private lateinit var database: AnalyzeDatabase
+    private lateinit var historyViewModel: HistoryViewModel
 
     private val viewModel by viewModels<AnalyzeViewModel> {
         ViewModelFactory.getInstance(this)
@@ -45,12 +45,18 @@ class DetailAnalyzeActivity : AppCompatActivity() {
             insets
         }
 
-        database = Room.databaseBuilder(applicationContext, AnalyzeDatabase::class.java, "riwayat_database").build()
+        database = AnalyzeDatabase.getDatabase(applicationContext)
+        historyViewModel = ViewModelProvider(this, ViewModelFactory.getInstance(this))[HistoryViewModel::class.java]
 
         val analyzeResult = intent.getStringExtra("PREDICTION_RESULT")
         val nutrition = intent.getStringExtra("NUTRITION")
         val confidenceScore = intent.getStringExtra("CONFIDENCE_SCORE") ?: "0"
         val imageUriString = intent.getStringExtra("IMAGE_URI")
+
+        Log.d("DetailAnalyzeActivity", "analyzeResult: $analyzeResult")
+        Log.d("DetailAnalyzeActivity", "nutrition: $nutrition")
+        Log.d("DetailAnalyzeActivity", "confidenceScore: $confidenceScore")
+        Log.d("DetailAnalyzeActivity", "imageUriString: $imageUriString")
 
         if (analyzeResult != null && imageUriString != null) {
             binding.titleTextView.text = analyzeResult
@@ -62,7 +68,7 @@ class DetailAnalyzeActivity : AppCompatActivity() {
                 saveAnalyzeToDatabase(imageUriString, analyzeResult, nutrition, confidenceScore)
             }
         } else {
-            showToast("Informasi tidak lengkap untuk disimpan.")
+            showToast("Informasi tidak lengkap untuk ditampilkan atau disimpan.")
         }
 
         val imageUri = Uri.parse(imageUriString)
@@ -116,17 +122,15 @@ class DetailAnalyzeActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveAnalyzeToDatabase(imageUri: String, analyzeResult: String, nutrition: String, confidenceScore : String) {
+    private fun saveAnalyzeToDatabase(imageUri: String, analyzeResult: String, nutrition: String, confidenceScore: String) {
         val history = AnalyzeHistory(
             imageUri = imageUri,
             analyzeResult = analyzeResult,
             nutrition = nutrition,
-            confidenceScore = confidenceScore.replace("%", "").toFloatOrNull() ?: 0f
+            confidenceScore = confidenceScore
         )
-
-        CoroutineScope(Dispatchers.IO).launch {
-            database.analyzeHistoryDao().insert(history)
-        }
+        historyViewModel.insertAnalyzeHistory(history)
+        Log.d("DetailAnalyzeActivity", "Analisis berhasil disimpan: $history")
     }
 
     private fun showLoading(isLoading: Boolean) {

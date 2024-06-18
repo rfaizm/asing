@@ -12,6 +12,8 @@ import com.example.capstone.data.api.response.PredictResponse
 import com.example.capstone.data.api.response.ProfileResponse
 import com.example.capstone.data.api.response.RegisterResponse
 import com.example.capstone.data.api.response.TipsResponse
+import com.example.capstone.data.local.entity.AnalyzeHistory
+import com.example.capstone.data.local.room.AnalyzeHistoryDao
 import com.example.capstone.data.pref.UpdateModel
 import com.example.capstone.data.pref.UserModel
 import com.example.capstone.data.pref.UserPreference
@@ -26,7 +28,7 @@ import retrofit2.HttpException
 import java.io.File
 
 class UserRepository private constructor(
-    private val apiService: ApiService, private val userPreference: UserPreference
+    private val apiService: ApiService, private val userPreference: UserPreference, private val analyzeHistoryDao: AnalyzeHistoryDao
 ) {
     fun register(email : String, password : String, name : String, height : Float, weight : Float, age : Int, circleHand : Float) = liveData {
         emit(ResultState.Loading)
@@ -180,6 +182,30 @@ class UserRepository private constructor(
         }
     }
 
+    fun insertAnalyzeHistory(history: AnalyzeHistory) = liveData {
+        emit(ResultState.Loading)
+        try {
+            analyzeHistoryDao.insert(history)
+            emit(ResultState.Success(Unit))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.localizedMessage ?: "Unknown Error"))
+        }
+    }
+
+    fun getAllAnalyses() = liveData {
+        emit(ResultState.Loading)
+        try {
+            val data = analyzeHistoryDao.getAllAnalyses().value
+            if (data != null) {
+                emit(ResultState.Success(data))
+            } else {
+                emit(ResultState.Error("No data found"))
+            }
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.localizedMessage ?: "Unknown Error"))
+        }
+    }
+
     private suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)
     }
@@ -199,9 +225,9 @@ class UserRepository private constructor(
     companion object {
         @Volatile
         private var instance: UserRepository? = null
-        fun getInstance(apiService: ApiService, userPreference: UserPreference) =
+        fun getInstance(apiService: ApiService, userPreference: UserPreference, analyzeHistoryDao: AnalyzeHistoryDao) =
             instance ?: synchronized(this) {
-                instance ?: UserRepository(apiService, userPreference)
+                instance ?: UserRepository(apiService, userPreference, analyzeHistoryDao)
             }.also { instance = it }
     }
 }

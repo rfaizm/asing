@@ -176,6 +176,12 @@ class AnalyzeFragment : Fragment() {
         val intent = Intent(requireContext(), DetailAnalyzeActivity::class.java)
         intent.putExtra(DetailAnalyzeActivity.EXTRA_IMAGE_URI, result)
         intent.putExtra(DetailAnalyzeActivity.DATA_DETAIL, data)
+
+        intent.putExtra("PREDICTION_RESULT", data.predictedClassName)
+        intent.putExtra("NUTRITION", data.recommendation)
+        intent.putExtra("CONFIDENCE_SCORE", data.confidenceScore)
+        intent.putExtra("IMAGE_URI", result)
+
         startActivity(intent)
     }
 

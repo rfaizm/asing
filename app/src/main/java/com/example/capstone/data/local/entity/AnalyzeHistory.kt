@@ -10,5 +10,5 @@ data class AnalyzeHistory (
     @ColumnInfo(name = "image_uri") val imageUri: String,
     @ColumnInfo(name = "analyze_result") val analyzeResult: String,
     @ColumnInfo(name = "nutrition") val nutrition: String,
-    @ColumnInfo(name = "confidence_score") val confidenceScore: Float
+    @ColumnInfo(name = "confidence_score") val confidenceScore: String
 )

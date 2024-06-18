@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.capstone.data.UserRepository
 import com.example.capstone.di.Injection
 import com.example.capstone.ui.analyze.AnalyzeViewModel
+import com.example.capstone.ui.home.history.HistoryViewModel
 import com.example.capstone.ui.login.LoginViewModel
 import com.example.capstone.ui.main.MainViewModel
 import com.example.capstone.ui.profile.ProfileViewModel
@@ -47,6 +48,10 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
 
             modelClass.isAssignableFrom(DetailTipsViewModel::class.java) -> {
                 DetailTipsViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {
+                HistoryViewModel(repository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
