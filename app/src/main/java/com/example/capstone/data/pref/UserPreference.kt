@@ -31,6 +31,7 @@ class UserPreference(private val dataStore: DataStore<Preferences>) {
             preferences[HAND_KEY] = user.handCircle
             preferences[TOKEN_KEY] = user.token
             preferences[IS_LOGIN_KEY] = true
+            preferences[PROGRESS_KEY] = 0f
         }
     }
 
@@ -44,6 +45,13 @@ class UserPreference(private val dataStore: DataStore<Preferences>) {
         }
     }
 
+    suspend fun updateProgress(user: UpdateProgress) {
+        dataStore.edit { preferences ->
+            preferences[PROGRESS_KEY] = user.calories
+        }
+    }
+
+
     fun getSession(): Flow<UserModel> {
         return dataStore.data.map { preferences ->
             UserModel(
@@ -56,11 +64,20 @@ class UserPreference(private val dataStore: DataStore<Preferences>) {
                 preferences[AGE_KEY] ?: 0,
                 preferences[HAND_KEY] ?: 0f,
                 preferences[TOKEN_KEY] ?: "",
-                preferences[IS_LOGIN_KEY] ?: false
-
+                preferences[IS_LOGIN_KEY] ?: false,
             )
         }
     }
+
+    fun getCalories(): Flow<UpdateProgress> {
+        return dataStore.data.map { preferences->
+            UpdateProgress(
+                preferences[PROGRESS_KEY] ?: 0f
+            )
+        }
+    }
+
+
 
     suspend fun logout() {
         dataStore.edit { preferences ->
@@ -71,6 +88,18 @@ class UserPreference(private val dataStore: DataStore<Preferences>) {
     fun getAuthToken(): String? {
         return runBlocking {
             dataStore.data.first()[TOKEN_KEY]
+        }
+    }
+
+    fun getLogin(): Boolean? {
+        return runBlocking {
+            dataStore.data.first()[IS_LOGIN_KEY]
+        }
+    }
+
+    fun getCaloriesFloat(): Float? {
+        return runBlocking {
+            dataStore.data.first()[PROGRESS_KEY]
         }
     }
 
@@ -88,6 +117,7 @@ class UserPreference(private val dataStore: DataStore<Preferences>) {
         private val HAND_KEY = floatPreferencesKey("handCircle")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
+        private val PROGRESS_KEY = floatPreferencesKey("progress")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {

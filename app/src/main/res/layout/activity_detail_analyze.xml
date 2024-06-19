@@ -55,6 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:layout_marginStart="16dp"
+            android:fontFamily="@font/manrope_medium"
             android:text="@string/result"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -68,6 +69,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:textSize="12sp"
+            android:fontFamily="@font/manrope_medium"
             android:text="@string/result_generate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/resultTextView" />
@@ -81,6 +83,7 @@
             android:text="@string/nutrition"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:fontFamily="@font/manrope_medium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/descResultTextView" />
 
@@ -92,8 +95,33 @@
             android:layout_marginTop="32dp"
             android:textSize="12sp"
             android:text="@string/nutrition_generate"
+            android:fontFamily="@font/manrope_medium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/nutritionTextView" />
+
+        <TextView
+            android:id="@+id/descNutritionProteinTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:textSize="12sp"
+            android:text="@string/nutrition_generate_protein"
+            android:fontFamily="@font/manrope_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/descNutritionTextView" />
+
+        <TextView
+            android:id="@+id/descNutritionFatTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:textSize="12sp"
+            android:text="@string/nutrition_generate"
+            android:fontFamily="@font/manrope_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/descNutritionProteinTextView" />
 
         <TextView
             android:id="@+id/scoreTextView"
@@ -104,8 +132,9 @@
             android:text="@string/score"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:fontFamily="@font/manrope_medium"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descNutritionTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/descNutritionFatTextView" />
 
         <TextView
             android:id="@+id/descScoreTextView"
@@ -115,6 +144,7 @@
             android:layout_marginTop="32dp"
             android:textSize="12sp"
             android:text="@string/score_generate"
+            android:fontFamily="@font/manrope_medium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/scoreTextView" />
 

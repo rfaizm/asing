@@ -8,15 +8,15 @@
     <string name="click_me_button">Click Me</string>
     <string name="fragment_profile">This is profile fragment</string>
     <string name="welcome_text">Selamat Datang</string>
-    <string name="welcome_desc1">Kami berkomitmen untuk membantu Anda memberikan nutrisi yang optimal bagi ibu hamil.</string>
-    <string name="welcome_desc2">Jelajahi konten dan temukan informasi terkini tentang gizi, resep sehat, dan tips untuk ibu hamil.</string>
-    <string name="welcome_desc3">Gunakan fitur kami untuk memantau kebutuhan gizi ibu hamil secara berkala.</string>
+    <string name="welcome_desc1">Kami berkomitmen untuk membantu Anda memberikan nutrisi yang optimal bagi balita dan ibu hamil.</string>
+    <string name="welcome_desc2">Jelajahi konten dan temukan informasi terkini tentang gizi, resep sehat, dan tips untuk balita dan ibu hamil.</string>
+    <string name="welcome_desc3">Gunakan fitur kami untuk memantau kebutuhan gizi balita dan ibu hamil secara berkala.</string>
     <string name="welcome_desc4">Aplikasi kami menyediakan konten yang interaktif dan edukatif. Mari jelajahi bersama!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="start">Mulai</string>
     <string name="register">Daftar</string>
-    <string name="email">Email</string>
+    <string name="email">youremail@example.com</string>
     <string name="password">Password</string>
     <string name="full_name">Nama Lengkap</string>
     <string name="age">Usia</string>
@@ -51,11 +51,13 @@
     <string name="edit">Edit</string>
     <string name="logout">logout</string>
     <string name="result">Hasil</string>
-    <string name="result_generate">Ayam</string>
+    <string name="result_generate">Nama Makanan</string>
     <string name="nutrition">Nutrisi</string>
-    <string name="nutrition_generate">Kalori: 261.5 kkal</string>
+    <string name="nutrition_generate">Kalori: 0 kkal</string>
+    <string name="nutrition_generate_protein">Protein: 0 gram</string>
+    <string name="nutrition_generate_fat">Fat: 0 gram</string>
     <string name="score">Confidence Score</string>
-    <string name="score_generate">64%</string>
+    <string name="score_generate">0%</string>
     <string name="eat_progress">Progress Makan</string>
     <string name="calories">150/300</string>
     <string name="desc_calories">kkal</string>
@@ -73,6 +75,7 @@
     <string name="register_gagal_1">Registrasi Gagal, Masukkan data dengan benar!</string>
     <string name="register_gagal_2">Password yang anda masukkan tidak sama!</string>
     <string name="password_too_short">Password yang anda kurang dari 8 karakter!</string>
+    <string name="error">Error</string>
     <string name="kosong"> </string>
     <string name="empty_image_warning">Silakan masukkan berkas gambar terlebih dahulu.</string>
     <string name="recomend">DIREKOMENDASIKAN</string>

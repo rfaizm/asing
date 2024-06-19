@@ -1,5 +1,6 @@
 package com.example.capstone.ui.analyze.detail
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -8,7 +9,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
@@ -18,10 +21,11 @@ import com.example.capstone.data.api.response.DataPredict
 import com.example.capstone.data.local.entity.AnalyzeHistory
 import com.example.capstone.data.local.room.AnalyzeDatabase
 import com.example.capstone.databinding.ActivityDetailAnalyzeBinding
-import com.example.capstone.ui.SharedViewModel
 import com.example.capstone.ui.ViewModelFactory
 import com.example.capstone.ui.analyze.AnalyzeViewModel
 import com.example.capstone.ui.home.history.HistoryViewModel
+import com.example.capstone.ui.main.MainActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class DetailAnalyzeActivity : AppCompatActivity() {
 
@@ -33,7 +37,6 @@ class DetailAnalyzeActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
 
-    private val sharedViewModel by viewModels<SharedViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -44,7 +47,6 @@ class DetailAnalyzeActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         database = AnalyzeDatabase.getDatabase(applicationContext)
         historyViewModel = ViewModelProvider(this, ViewModelFactory.getInstance(this))[HistoryViewModel::class.java]
 
@@ -59,11 +61,6 @@ class DetailAnalyzeActivity : AppCompatActivity() {
         Log.d("DetailAnalyzeActivity", "imageUriString: $imageUriString")
 
         if (analyzeResult != null && imageUriString != null) {
-            binding.titleTextView.text = analyzeResult
-            binding.descResultTextView.text = nutrition
-            binding.descScoreTextView.text = confidenceScore
-            binding.previewImageView.setImageURI(Uri.parse(imageUriString))
-
             if (nutrition != null) {
                 saveAnalyzeToDatabase(imageUriString, analyzeResult, nutrition, confidenceScore)
             }
@@ -73,7 +70,6 @@ class DetailAnalyzeActivity : AppCompatActivity() {
 
         val imageUri = Uri.parse(imageUriString)
         if (imageUri != null) {
-            binding.previewImageView.setImageURI(imageUri)
         } else {
             showToast("Gagal memuat gambar.")
         }
@@ -92,13 +88,72 @@ class DetailAnalyzeActivity : AppCompatActivity() {
 
         val imageUri = Uri.parse(intent.getStringExtra(EXTRA_IMAGE_URI))
         val nameFood = detailData?.predictedClassName?.capitalize().toString()
+        val nameFoodsmall = detailData?.predictedClassName
+        val recommendation = detailData?.recommendation.toString()
+        val confidenceScore = detailData?.confidenceScore.toString() // Ambil string asli dengan tanda persen
+        val numericPart = confidenceScore.removeSuffix("%") // Hapus tanda persen
+        val floatConfidenceScore = numericPart.toFloatOrNull() // Konversi menjadi float
         imageUri?.let {
             binding.previewImageView.setImageURI(it)
         }
-        binding.descResultTextView.text = nameFood
-        binding.titleTextView.text = detailData?.recommendation.toString()
-        binding.descScoreTextView.text = detailData?.confidenceScore.toString()
-        viewModel.getNutrition(nameFood).observe(this) { result ->
+
+
+        if (floatConfidenceScore != null) {
+            if (floatConfidenceScore <= 70f) {
+                binding.titleTextView.visibility = View.GONE
+                val dialog = MaterialAlertDialogBuilder(this).apply {
+                    setTitle("TIDAK DIREKOMENDASIKAN")
+                    setMessage("Makanan tidak direkomendasikan")
+                    setPositiveButton("Lanjut") { _, _ ->
+                        val intent = Intent(context, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        finish()
+                    }
+                    create()
+                }.show()
+
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.green))
+            } else {
+                viewModel.getNutrition(nameFoodsmall!!).observe(this) { result ->
+                    if (result != null) {
+                        when (result) {
+                            is ResultState.Loading -> {
+                                showLoading(true)
+                            }
+
+                            is ResultState.Success -> {
+                                val calories = result.data.data?.calories!!.toFloat()
+                                val protein = result.data.data.proteins
+                                val fat = result.data.data.fat
+                                uploadProgressCalories(calories)
+                                binding.titleTextView.text = recommendation
+                                binding.descResultTextView.text = nameFood
+                                binding.descScoreTextView.text = confidenceScore
+                                binding.descNutritionTextView.text = "Kalori: ${calories} kkal"
+                                binding.descNutritionProteinTextView.text = "Protein: ${protein} gram"
+                                binding.descNutritionFatTextView.text = "Fat: ${fat} gram"
+                                showLoading(false)
+                            }
+
+                            is ResultState.Error -> {
+
+                                showToast(result.error)
+                                showLoading(false)
+                            }
+                        }
+                    }
+
+                }
+            }
+        } else {
+            showToast("Failed to convert confidence score to float")
+        }
+
+    }
+
+    private fun uploadProgressCalories(calories : Float) {
+        viewModel.uploadCalories(calories).observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is ResultState.Loading -> {
@@ -106,9 +161,6 @@ class DetailAnalyzeActivity : AppCompatActivity() {
                     }
 
                     is ResultState.Success -> {
-                        val calories = result.data.data?.calories!!.toFloat()
-                        binding.descNutritionTextView.text = calories.toString()
-                        sharedViewModel.setCalories(calories)
                         showLoading(false)
                     }
 
@@ -118,7 +170,6 @@ class DetailAnalyzeActivity : AppCompatActivity() {
                     }
                 }
             }
-
         }
     }
 

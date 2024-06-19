@@ -1,26 +1,28 @@
 package com.example.capstone.ui.home
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
+import com.example.capstone.data.local.room.AnalyzeDatabase
+import androidx.fragment.app.viewModels
+import com.example.capstone.data.ResultState
 import com.example.capstone.databinding.FragmentHomeBinding
-import com.example.capstone.ui.SharedViewModel
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import com.example.capstone.ui.ViewModelFactory
+
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val sharedViewModel: SharedViewModel by activityViewModels()
     private var progressCircularBar: Float = 0F
-    private val sharedPreferences by lazy {
-        requireContext().getSharedPreferences("home_fragment_prefs", Context.MODE_PRIVATE)
+
+    private val viewModel by viewModels<HomeViewModel> {
+        ViewModelFactory.getInstance(requireContext())
     }
 
 
@@ -35,15 +37,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkAndResetProgress()
-        setupObservers()
         setupCircularProgressBar()
-    }
-
-    private fun setupObservers() {
-        sharedViewModel.calories.observe(viewLifecycleOwner) { newProgress ->
-            updateProgress(newProgress)
-        }
+        setupAction()
     }
 
     private fun setupCircularProgressBar() {
@@ -54,13 +49,25 @@ class HomeFragment : Fragment() {
         binding.numberCalories.text = "${progressCircularBar.toInt()}/300"
     }
 
-    private fun checkAndResetProgress() {
-        val lastUpdatedDate = sharedPreferences.getString("last_updated_date", null)
-        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+    private fun setupAction() {
+        viewModel.getCalories().observe(viewLifecycleOwner) { result ->
+            if (result != null) {
+                when (result) {
+                    is ResultState.Loading -> {
+                        showLoading(true)
+                    }
 
-        if (lastUpdatedDate == null || lastUpdatedDate != currentDate) {
-            progressCircularBar = 0f
-            sharedPreferences.edit().putString("last_updated_date", currentDate).apply()
+                    is ResultState.Success -> {
+                        updateProgress(result.data)
+                        showLoading(false)
+                    }
+
+                    is ResultState.Error -> {
+                        showToast(result.error)
+                        showLoading(false)
+                    }
+                }
+            }
         }
     }
 
@@ -68,6 +75,16 @@ class HomeFragment : Fragment() {
         progressCircularBar = newProgress
         binding.circularProgressBar.setProgressWithAnimation(progressCircularBar, 1000)
         binding.numberCalories.text = "${progressCircularBar.toInt()}/300"
+    }
+
+
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

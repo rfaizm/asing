@@ -4,28 +4,29 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.capstone.data.api.config.ApiService
-import com.example.capstone.data.api.response.Data
+import com.example.capstone.data.api.response.ErrorResponse
 import com.example.capstone.data.api.response.LoginResponse
 import com.example.capstone.data.api.response.LogoutResponse
-import com.example.capstone.data.api.response.NutriotionResponse
-import com.example.capstone.data.api.response.PredictResponse
-import com.example.capstone.data.api.response.ProfileResponse
 import com.example.capstone.data.api.response.RegisterResponse
-import com.example.capstone.data.api.response.TipsResponse
-import com.example.capstone.data.local.entity.AnalyzeHistory
-import com.example.capstone.data.local.room.AnalyzeHistoryDao
 import com.example.capstone.data.pref.UpdateModel
+import com.example.capstone.data.pref.UpdateProgress
 import com.example.capstone.data.pref.UserModel
 import com.example.capstone.data.pref.UserPreference
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.HttpException
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import com.example.capstone.data.local.entity.AnalyzeHistory
+import com.example.capstone.data.local.room.AnalyzeHistoryDao
+import com.example.capstone.data.api.response.Data
+import com.example.capstone.data.api.response.TipsResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class UserRepository private constructor(
     private val apiService: ApiService, private val userPreference: UserPreference, private val analyzeHistoryDao: AnalyzeHistoryDao
@@ -39,7 +40,9 @@ class UserRepository private constructor(
         } catch (e : HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, RegisterResponse::class.java)
-            emit(ResultState.Error(errorResponse.message!!))
+            emit(ResultState.Error(errorResponse.message!! ?: "Unknown error"))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message ?: "Unknown error"))
         }
     }
 
@@ -62,7 +65,9 @@ class UserRepository private constructor(
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, LoginResponse::class.java)
-            emit(ResultState.Error(errorResponse.message!!))
+            emit(ResultState.Error(errorResponse.message?: "Unknown error"))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message ?: "Unknown error"))
         }
     }
 
@@ -76,7 +81,9 @@ class UserRepository private constructor(
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, LogoutResponse::class.java)
-            emit(ResultState.Error(errorResponse.message!!))
+            emit(ResultState.Error(errorResponse.message?: "Unknown error"))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message ?: "Unknown error"))
         }
     }
 
@@ -92,8 +99,10 @@ class UserRepository private constructor(
             emit(ResultState.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, ProfileResponse::class.java)
-            emit(ResultState.Error(errorResponse.status!!))
+            val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+            emit(ResultState.Error(errorResponse.message?: "Unknown error"))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message ?: "Unknown error"))
         }
     }
 
@@ -112,8 +121,10 @@ class UserRepository private constructor(
             emit(ResultState.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, PredictResponse::class.java)
-            emit(ResultState.Error(errorResponse.status!!))
+            val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+            emit(ResultState.Error(errorResponse.message?: "Unknown error"))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message ?: "Unknown error"))
         }
     }
 
@@ -126,8 +137,26 @@ class UserRepository private constructor(
             emit(ResultState.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, NutriotionResponse::class.java)
-            emit(ResultState.Error(errorResponse.status!!))
+            val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+            emit(ResultState.Error(errorResponse.message?: "Unknown error"))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message ?: "Unknown error"))
+        }
+    }
+
+    fun getToken() = liveData {
+        emit(ResultState.Loading)
+
+        try {
+            val token = userPreference.getAuthToken()
+            val successResponse = apiService.getToken(token = "Bearer $token")
+            emit(ResultState.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+            emit(ResultState.Error(errorResponse.message?: "Unknown error"))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message ?: "Unknown error"))
         }
     }
 
@@ -182,6 +211,71 @@ class UserRepository private constructor(
         }
     }
 
+    fun uploadCalories(calories : Float) = liveData {
+        emit(ResultState.Loading)
+
+        try {
+            val token = userPreference.getAuthToken()
+            var sumCalories = userPreference.getCaloriesFloat()
+            sumCalories = sumCalories?.plus(calories)
+            val successResponse = apiService.uploadCalories(token = "Bearer $token", progress = sumCalories!!)
+            emit(ResultState.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+            emit(ResultState.Error(errorResponse.message?: "Unknown error"))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message ?: "Unknown error"))
+        }
+    }
+
+    fun getCalories() = liveData {
+        emit(ResultState.Loading)
+
+        try {
+            val token = userPreference.getAuthToken()
+            val successResponse = apiService.getCalories(token = "Bearer $token")
+
+            if (successResponse.result!!.isEmpty()) {
+                apiService.uploadCalories(token = "Bearer $token", progress = 0f)
+                emit(ResultState.Success(0f))
+            } else {
+                val lastIndex = successResponse.result.lastIndex
+                val result = successResponse.result[lastIndex]?.progress
+                val date = successResponse.result[lastIndex]?.id
+
+                // Ambil tanggal dari variabel date
+                val dateString = date!!.split("_")[1]
+                val sdf = SimpleDateFormat("yyyyMMdd")
+                val progressDate = sdf.parse(dateString)
+
+                // Ambil tanggal hari ini dalam format yang sama
+                val today = Calendar.getInstance().time
+                val todayString = sdf.format(today)
+                val todayDate = sdf.parse(todayString)
+
+                if (progressDate != todayDate) {
+                    apiService.uploadCalories(token = "Bearer $token", progress = 0f)
+                    emit(ResultState.Success(0f))
+                } else {
+                    val numericPart = result!!.split(" ")[0] // Memisahkan dan mengambil bagian numerik
+                    val floatResult = numericPart.toFloatOrNull() // Mengonversi menjadi float
+                    saveCalories(UpdateProgress(floatResult!!))
+                    emit(ResultState.Success(floatResult))
+                }
+            }
+
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, LoginResponse::class.java)
+            emit(ResultState.Error(errorResponse.message ?: "Unknown error"))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message ?: "Unknown error"))
+        }
+    }
+
+
+
     fun insertAnalyzeHistory(history: AnalyzeHistory) = liveData {
         emit(ResultState.Loading)
         try {
@@ -212,6 +306,10 @@ class UserRepository private constructor(
 
     private suspend fun updateSession(user : UpdateModel) {
         userPreference.updateSession(user)
+    }
+
+    private suspend fun saveCalories(user : UpdateProgress) {
+        userPreference.updateProgress(user)
     }
 
     fun getSession(): Flow<UserModel> {

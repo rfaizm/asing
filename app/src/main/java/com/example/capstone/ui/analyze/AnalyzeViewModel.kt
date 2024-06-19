@@ -12,4 +12,6 @@ class AnalyzeViewModel(private val repository : UserRepository)  : ViewModel() {
     fun uploadImage(file : File) = repository.uploadImage(file)
 
     fun getNutrition(name  : String) = repository.getNutrition(name)
+
+    fun uploadCalories(calories : Float) = repository.uploadCalories(calories)
 }

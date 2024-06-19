@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentRegisterCredentialBinding
 import com.example.capstone.ui.login.LoginActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class RegisterCredentialFragment : Fragment() {
@@ -90,7 +91,7 @@ class RegisterCredentialFragment : Fragment() {
         message: String,
         positiveAction: (dialog: DialogInterface) -> Unit
     ) {
-        AlertDialog.Builder(requireContext()).apply {
+        MaterialAlertDialogBuilder(requireContext()).apply {
             setTitle(title)
             setMessage(message)
             setPositiveButton("OK") { dialog, _ ->

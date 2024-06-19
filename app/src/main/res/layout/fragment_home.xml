@@ -8,6 +8,14 @@
     android:padding="16dp"
     tools:context=".ui.home.HomeFragment">
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:layout_alignParentTop="true" />
+
     <TextView
         android:id="@+id/progressTextView"
         android:layout_width="0dp"

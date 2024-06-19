@@ -3,11 +3,11 @@ package com.example.capstone.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.capstone.data.UserRepository
 
-class HomeViewModel : ViewModel() {
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+class HomeViewModel(private val repository: UserRepository)  : ViewModel() {
+    fun check() : String {
+        return "Coba"
     }
-    val text: LiveData<String> = _text
+    fun getCalories() = repository.getCalories()
 }

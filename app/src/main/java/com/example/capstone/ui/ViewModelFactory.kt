@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.capstone.data.UserRepository
 import com.example.capstone.di.Injection
 import com.example.capstone.ui.analyze.AnalyzeViewModel
+import com.example.capstone.ui.home.HomeViewModel
 import com.example.capstone.ui.home.history.HistoryViewModel
 import com.example.capstone.ui.login.LoginViewModel
 import com.example.capstone.ui.main.MainViewModel
@@ -42,8 +43,8 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
                 ProfileViewModel(repository) as T
             }
 
-            modelClass.isAssignableFrom(SharedViewModel::class.java) -> {
-                SharedViewModel() as T
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(repository) as T
             }
 
             modelClass.isAssignableFrom(DetailTipsViewModel::class.java) -> {

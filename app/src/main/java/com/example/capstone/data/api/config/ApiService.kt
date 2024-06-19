@@ -6,10 +6,12 @@ import com.example.capstone.data.api.response.LogoutResponse
 import com.example.capstone.data.api.response.NutriotionResponse
 import com.example.capstone.data.api.response.PredictResponse
 import com.example.capstone.data.api.response.ProfileResponse
+import com.example.capstone.data.api.response.ProgressGetResponse
+import com.example.capstone.data.api.response.ProgressResponse
 import com.example.capstone.data.api.response.RegisterResponse
 import com.example.capstone.data.api.response.TipsResponse
+import com.example.capstone.data.api.response.TokenResponse
 import okhttp3.MultipartBody
-import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -18,6 +20,8 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
+import retrofit2.Call
 
 interface ApiService {
     @FormUrlEncoded
@@ -62,11 +66,29 @@ interface ApiService {
         @Part file: MultipartBody.Part,
     ) : PredictResponse
 
-    @GET("food/{name}")
+    @GET("food")
     suspend fun getNutrition(
         @Header("Authorization") token: String,
-        @Path("name") name: String,
+        @Query("name") name : String
     ) : NutriotionResponse
+
+
+    @GET("check-token")
+    suspend fun getToken(
+        @Header("Authorization") token: String,
+    ) : TokenResponse
+
+    @FormUrlEncoded
+    @POST("progress")
+    suspend fun uploadCalories(
+        @Header("Authorization") token: String,
+        @Field("progress") progress: Float,
+    ) : ProgressResponse
+
+    @GET("progress")
+    suspend fun getCalories(
+        @Header("Authorization") token: String,
+    ) : ProgressGetResponse
 
     @GET("tips")
     fun getAllTips(

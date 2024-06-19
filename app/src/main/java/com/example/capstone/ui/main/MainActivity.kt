@@ -2,6 +2,8 @@ package com.example.capstone.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -11,8 +13,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.capstone.R
+import com.example.capstone.data.ResultState
 import com.example.capstone.databinding.ActivityMainBinding
 import com.example.capstone.ui.ViewModelFactory
+import com.example.capstone.ui.login.LoginActivity
 import com.example.capstone.ui.register.activity.RegisterActivity
 
 class MainActivity : AppCompatActivity() {
@@ -29,12 +33,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.getSession().observe(this) { user ->
-            if (!user.isLogin) {
-                startActivity(Intent(this, RegisterActivity::class.java))
-                finish()
-            }
-        }
+        setupAction()
 
         val navView: BottomNavigationView = binding.navView
 
@@ -50,5 +49,46 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
         navView.setupWithNavController(navController)
 
+    }
+
+
+    private fun setupAction() {
+        viewModel.getSession().observe(this) { user ->
+            if (!user.isLogin) {
+                startActivity(Intent(this, RegisterActivity::class.java))
+                finish()
+            }else {
+                setupToken()
+            }
+        }
+    }
+
+    private fun setupToken() {
+        try {
+            viewModel.getToken().observe(this) { result ->
+
+                when (result) {
+                    is ResultState.Loading -> {
+
+                    }
+
+                    is ResultState.Success -> {
+
+                    }
+
+                    is ResultState.Error -> {
+                        showToast(result.error)
+                        viewModel.logout()
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("MainActivity", "Error in setupToken: ${e.message}", e)
+        }
+    }
+
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

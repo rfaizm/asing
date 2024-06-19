@@ -12,14 +12,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.viewModels
 import com.example.capstone.R
 import com.example.capstone.data.ResultState
 import com.example.capstone.databinding.ActivityLoginBinding
 import com.example.capstone.ui.ViewModelFactory
 import com.example.capstone.ui.main.MainActivity
-import com.example.capstone.ui.register.RegisterViewModel
 import com.example.capstone.ui.register.activity.RegisterActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class LoginActivity : AppCompatActivity() {
 
@@ -63,9 +62,9 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     is ResultState.Success -> {
-                        AlertDialog.Builder(this).apply {
+                        MaterialAlertDialogBuilder(this).apply {
                             setTitle("Yeah!")
-                            setMessage("Anda berhasil login. Sudah tidak sabar untuk belajar ya?")
+                            setMessage("Anda berhasil login")
                             setPositiveButton("Lanjut") { _, _ ->
                                 val intent = Intent(context, MainActivity::class.java)
                                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK

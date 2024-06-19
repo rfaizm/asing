@@ -20,3 +20,7 @@ data class UpdateModel (
     val age : Int,
     val handCircle : Float,
 )
+
+data class UpdateProgress (
+    val calories : Float
+)

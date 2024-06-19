@@ -21,6 +21,7 @@ import com.example.capstone.databinding.FragmentRegisterDataBinding
 import com.example.capstone.ui.ViewModelFactory
 import com.example.capstone.ui.login.LoginActivity
 import com.example.capstone.ui.register.RegisterViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class RegisterDataFragment : Fragment() {
@@ -75,7 +76,7 @@ class RegisterDataFragment : Fragment() {
                         }
 
                         is ResultState.Success -> {
-                            AlertDialog.Builder(requireContext()).apply {
+                            MaterialAlertDialogBuilder(requireContext()).apply {
                                 setTitle("Yeah!")
                                 setMessage("Akun dengan $email sudah jadi nih. Yuk, login dan belajar coding.")
                                 setPositiveButton("Lanjut") { _, _ ->
@@ -109,7 +110,7 @@ class RegisterDataFragment : Fragment() {
         message: String,
         positiveAction: (dialog: DialogInterface) -> Unit
     ) {
-        AlertDialog.Builder(requireContext()).apply {
+        MaterialAlertDialogBuilder(requireContext()).apply {
             setTitle(title)
             setMessage(message)
             setPositiveButton("OK") { dialog, _ ->

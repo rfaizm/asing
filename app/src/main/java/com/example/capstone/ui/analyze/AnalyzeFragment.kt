@@ -1,6 +1,7 @@
 package com.example.capstone.ui.analyze
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
@@ -27,6 +29,7 @@ import com.example.capstone.ui.camera.CameraActivity.Companion.CAMERAX_RESULT
 import com.example.capstone.utils.getImageUri
 import com.example.capstone.utils.reduceFileImage
 import com.example.capstone.utils.uriToFile
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class AnalyzeFragment : Fragment() {
 
@@ -139,9 +142,7 @@ class AnalyzeFragment : Fragment() {
 
     private fun uploadImage() {
         currentImageUri?.let { uri ->
-            Log.d("AnalyzeFragment", "Upload Image URI: $uri")
             val imageFile = uriToFile(uri, requireContext()).reduceFileImage()
-            Log.d("AnalyzeFragment", "Image File Path: ${imageFile.absolutePath}")
             showLoading(true)
 
             viewModel.uploadImage(imageFile).observe(viewLifecycleOwner) { result ->
@@ -162,7 +163,7 @@ class AnalyzeFragment : Fragment() {
                         }
 
                         is ResultState.Error -> {
-                            showToast(result.error)
+                            showAlert(getString(R.string.error), result.error) {}
                             showLoading(false)
                         }
                     }
@@ -183,6 +184,23 @@ class AnalyzeFragment : Fragment() {
         intent.putExtra("IMAGE_URI", result)
 
         startActivity(intent)
+    }
+
+    private fun showAlert(
+        title: String,
+        message: String,
+        positiveAction: (dialog: DialogInterface) -> Unit
+    ) {
+        MaterialAlertDialogBuilder(requireContext()).apply {
+            setTitle(title)
+            setMessage(message)
+            setPositiveButton("OK") { dialog, _ ->
+                positiveAction.invoke(dialog)
+            }
+            setCancelable(false)
+            create()
+            show()
+        }
     }
 
     override fun onDestroyView() {
