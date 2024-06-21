@@ -27,4 +27,6 @@ class HistoryViewModel(private val repository: UserRepository) : ViewModel() {
             }
         }
     }
+
+    fun getNutrition(name  : String) = repository.getNutrition(name)
 }

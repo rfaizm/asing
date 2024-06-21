@@ -24,6 +24,7 @@ import java.util.Calendar
 import com.example.capstone.data.local.entity.AnalyzeHistory
 import com.example.capstone.data.local.room.AnalyzeHistoryDao
 import com.example.capstone.data.api.response.Data
+import com.example.capstone.data.api.response.DataHistory
 import com.example.capstone.data.api.response.TipsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -165,8 +166,10 @@ class UserRepository private constructor(
         try {
             val token = userPreference.getAuthToken()
             val response = apiService.getAllTips(token = "Bearer $token").execute()
+
             if (response.isSuccessful) {
                 val data = response.body()?.data
+
                 if (data != null) {
                     emit(ResultState.Success(data))
                 } else {
@@ -230,48 +233,55 @@ class UserRepository private constructor(
     }
 
     fun getCalories() = liveData {
-        emit(ResultState.Loading)
+        val login = userPreference.getLogin()
 
-        try {
-            val token = userPreference.getAuthToken()
-            val successResponse = apiService.getCalories(token = "Bearer $token")
+        if (login == null || !login) {
+            return@liveData
+        } else {
+            emit(ResultState.Loading)
 
-            if (successResponse.result!!.isEmpty()) {
-                apiService.uploadCalories(token = "Bearer $token", progress = 0f)
-                emit(ResultState.Success(0f))
-            } else {
-                val lastIndex = successResponse.result.lastIndex
-                val result = successResponse.result[lastIndex]?.progress
-                val date = successResponse.result[lastIndex]?.id
+            try {
+                val token = userPreference.getAuthToken()
+                val successResponse = apiService.getCalories(token = "Bearer $token")
 
-                // Ambil tanggal dari variabel date
-                val dateString = date!!.split("_")[1]
-                val sdf = SimpleDateFormat("yyyyMMdd")
-                val progressDate = sdf.parse(dateString)
-
-                // Ambil tanggal hari ini dalam format yang sama
-                val today = Calendar.getInstance().time
-                val todayString = sdf.format(today)
-                val todayDate = sdf.parse(todayString)
-
-                if (progressDate != todayDate) {
+                if (successResponse.result!!.isEmpty()) {
                     apiService.uploadCalories(token = "Bearer $token", progress = 0f)
                     emit(ResultState.Success(0f))
                 } else {
-                    val numericPart = result!!.split(" ")[0] // Memisahkan dan mengambil bagian numerik
-                    val floatResult = numericPart.toFloatOrNull() // Mengonversi menjadi float
-                    saveCalories(UpdateProgress(floatResult!!))
-                    emit(ResultState.Success(floatResult))
-                }
-            }
+                    val lastIndex = successResponse.result.lastIndex
+                    val result = successResponse.result[lastIndex]?.progress
+                    val date = successResponse.result[lastIndex]?.id
 
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, LoginResponse::class.java)
-            emit(ResultState.Error(errorResponse.message ?: "Unknown error"))
-        } catch (e: Exception) {
-            emit(ResultState.Error(e.message ?: "Unknown error"))
+                    // Ambil tanggal dari variabel date
+                    val dateString = date!!.split("_")[1]
+                    val sdf = SimpleDateFormat("yyyyMMdd")
+                    val progressDate = sdf.parse(dateString)
+
+                    // Ambil tanggal hari ini dalam format yang sama
+                    val today = Calendar.getInstance().time
+                    val todayString = sdf.format(today)
+                    val todayDate = sdf.parse(todayString)
+
+                    if (progressDate != todayDate) {
+                        apiService.uploadCalories(token = "Bearer $token", progress = 0f)
+                        emit(ResultState.Success(0f))
+                    } else {
+                        val numericPart = result!!.split(" ")[0] // Memisahkan dan mengambil bagian numerik
+                        val floatResult = numericPart.toFloatOrNull() // Mengonversi menjadi float
+                        saveCalories(UpdateProgress(floatResult!!))
+                        emit(ResultState.Success(floatResult))
+                    }
+                }
+
+            } catch (e: HttpException) {
+                val errorBody = e.response()?.errorBody()?.string()
+                val errorResponse = Gson().fromJson(errorBody, LoginResponse::class.java)
+                emit(ResultState.Error(errorResponse.message ?: "Unknown error"))
+            } catch (e: Exception) {
+                emit(ResultState.Error(e.message ?: "Unknown error"))
+            }
         }
+
     }
 
 
@@ -297,6 +307,45 @@ class UserRepository private constructor(
             }
         } catch (e: Exception) {
             emit(ResultState.Error(e.localizedMessage ?: "Unknown Error"))
+        }
+    }
+
+    fun getAllHistory() = liveData {
+        val login = userPreference.getLogin()
+
+        if (login == null || !login) {
+            return@liveData
+        } else {
+            emit(ResultState.Loading)
+
+            try {
+                val token = userPreference.getAuthToken()
+                val successResponse = apiService.getHistory(token = "Bearer $token")
+                if (successResponse.data!!.isEmpty()) {
+                    emit(ResultState.Error("Error: Data is null"))
+                }  else {
+                    val mutableFinalResult = mutableListOf<DataHistory?>()
+                    successResponse.data.forEach { data ->
+                        if (data?.history?.recommendation == "DIREKOMENDASIKAN") {
+                            mutableFinalResult.add(data)
+                        }
+                    }
+                    val finalResult: List<DataHistory?> = mutableFinalResult.toList()
+                    if (finalResult.isNotEmpty()) {
+                        emit(ResultState.Success(finalResult))
+                    } else {
+                        emit(ResultState.Error("No recommended data found"))
+                    }
+                }
+
+
+            } catch (e: HttpException) {
+                val errorBody = e.response()?.errorBody()?.string()
+                val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+                emit(ResultState.Error(errorResponse.message ?: "Unknown error"))
+            } catch (e: Exception) {
+                emit(ResultState.Error(e.message ?: "Unknown error"))
+            }
         }
     }
 

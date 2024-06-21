@@ -2,31 +2,34 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="200dp"
+    android:layout_width="150dp"
+    android:background="@drawable/corner_radius_8dp"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_tips"
-        android:layout_width="161dp"
-        android:layout_height="153dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="14dp"
+        android:layout_width="122dp"
+        android:layout_height="104dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_place_holder"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.181"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.192"
+        app:shapeAppearanceOverlay="@style/roundedImageViewPart" />
 
     <TextView
         android:id="@+id/tv_tips_title"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="14dp"
+        android:layout_width="123dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
         android:textColor="@color/text_color"
         android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.592"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_tips"
         tools:text="@string/history_title" />
@@ -35,13 +38,14 @@
         android:id="@+id/tv_description"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
         android:layout_marginTop="8dp"
+        android:gravity="center"
         android:textColor="@color/text_color_light"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_tips_title"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         tools:text="@string/description_history" />
 </androidx.constraintlayout.widget.ConstraintLayout>

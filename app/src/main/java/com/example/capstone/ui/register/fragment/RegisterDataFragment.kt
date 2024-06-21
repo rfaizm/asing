@@ -78,7 +78,7 @@ class RegisterDataFragment : Fragment() {
                         is ResultState.Success -> {
                             MaterialAlertDialogBuilder(requireContext()).apply {
                                 setTitle("Yeah!")
-                                setMessage("Akun dengan $email sudah jadi nih. Yuk, login dan belajar coding.")
+                                setMessage("Akun dengan berhasil dibuat")
                                 setPositiveButton("Lanjut") { _, _ ->
                                     val intent = Intent(context, LoginActivity::class.java)
                                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK

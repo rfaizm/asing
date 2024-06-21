@@ -92,64 +92,43 @@ class DetailAnalyzeActivity : AppCompatActivity() {
         val nameFoodsmall = detailData?.predictedClassName
         val recommendation = detailData?.recommendation.toString()
         val confidenceScore = detailData?.confidenceScore.toString() // Ambil string asli dengan tanda persen
-        val numericPart = confidenceScore.removeSuffix("%") // Hapus tanda persen
-        val floatConfidenceScore = numericPart.toFloatOrNull() // Konversi menjadi float
         imageUri?.let {
             binding.previewImageView.setImageURI(it)
         }
 
-
-        if (floatConfidenceScore != null) {
-            if (floatConfidenceScore <= 70f) {
-                binding.titleTextView.visibility = View.GONE
-                val dialog = MaterialAlertDialogBuilder(this).apply {
-                    setTitle("TIDAK DIREKOMENDASIKAN")
-                    setMessage("Makanan tidak direkomendasikan")
-                    setPositiveButton("Lanjut") { _, _ ->
-                        val intent = Intent(context, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(intent)
-                        finish()
-                    }
-                    create()
-                }.show()
-
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.green))
-            } else {
-                viewModel.getNutrition(nameFoodsmall!!).observe(this) { result ->
-                    if (result != null) {
-                        when (result) {
-                            is ResultState.Loading -> {
-                                showLoading(true)
-                            }
-
-                            is ResultState.Success -> {
-                                val calories = result.data.data?.calories!!.toFloat()
-                                val protein = result.data.data.proteins
-                                val fat = result.data.data.fat
-                                uploadProgressCalories(calories)
-                                binding.titleTextView.text = recommendation
-                                binding.descResultTextView.text = nameFood
-                                binding.descScoreTextView.text = confidenceScore
-                                binding.descNutritionTextView.text = "Kalori: ${calories} kkal"
-                                binding.descNutritionProteinTextView.text = "Protein: ${protein} gram"
-                                binding.descNutritionFatTextView.text = "Fat: ${fat} gram"
-                                showLoading(false)
-                            }
-
-                            is ResultState.Error -> {
-
-                                showToast(result.error)
-                                showLoading(false)
-                            }
-                        }
+        viewModel.getNutrition(nameFoodsmall!!).observe(this) { result ->
+            if (result != null) {
+                when (result) {
+                    is ResultState.Loading -> {
+                        showLoading(true)
                     }
 
+                    is ResultState.Success -> {
+                        val calories = result.data.data?.calories!!.toFloat()
+                        val protein = result.data.data.proteins
+                        val fat = result.data.data.fat
+                        Log.d("DetailAnalyzeActivity", "calories: $calories")
+                        uploadProgressCalories(calories)
+                        binding.titleTextView.text = recommendation
+                        binding.descResultTextView.text = nameFood
+                        binding.descScoreTextView.text = confidenceScore
+                        binding.descNutritionTextView.text = "Kalori: ${calories} kkal"
+                        binding.descNutritionProteinTextView.text = "Protein: ${protein} gram"
+                        binding.descNutritionFatTextView.text = "Fat: ${fat} gram"
+                        showLoading(false)
+                    }
+
+                    is ResultState.Error -> {
+
+                        showToast(result.error)
+                        showLoading(false)
+                    }
                 }
             }
-        } else {
-            showToast("Failed to convert confidence score to float")
+
         }
+
+
 
     }
 
@@ -162,6 +141,7 @@ class DetailAnalyzeActivity : AppCompatActivity() {
                     }
 
                     is ResultState.Success -> {
+                        Log.d("DetailAnalyzeActivity", "success upload")
                         showLoading(false)
                     }
 

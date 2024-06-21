@@ -1,6 +1,7 @@
 package com.example.capstone.data.api.config
 
 import com.example.capstone.data.api.response.DetailTipsResponse
+import com.example.capstone.data.api.response.HistoryResponse
 import com.example.capstone.data.api.response.LoginResponse
 import com.example.capstone.data.api.response.LogoutResponse
 import com.example.capstone.data.api.response.NutriotionResponse
@@ -100,4 +101,9 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id") id: String
     ): Call<DetailTipsResponse>
+
+    @GET("history")
+    suspend fun getHistory(
+        @Header("Authorization") token: String
+    ) : HistoryResponse
 }

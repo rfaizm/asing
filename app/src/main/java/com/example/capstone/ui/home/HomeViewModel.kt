@@ -10,4 +10,6 @@ class HomeViewModel(private val repository: UserRepository)  : ViewModel() {
         return "Coba"
     }
     fun getCalories() = repository.getCalories()
+
+    fun getHistory() = repository.getAllHistory()
 }

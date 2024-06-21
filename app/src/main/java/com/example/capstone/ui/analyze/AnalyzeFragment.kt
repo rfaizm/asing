@@ -154,8 +154,20 @@ class AnalyzeFragment : Fragment() {
 
                         is ResultState.Success -> {
                             val data = result.data.data
+                            val confidenceScore = result.data.data?.confidenceScore.toString() // Ambil string asli dengan tanda persen
+                            val numericPart = confidenceScore.removeSuffix("%") // Hapus tanda persen
+                            val floatConfidenceScore = numericPart.toFloatOrNull() // Konversi menjadi float
                             if (data != null) {
-                                moveToResult(currentImageUri.toString(), data)
+                                if (floatConfidenceScore != null) {
+                                    if (floatConfidenceScore <= 70f) {
+                                        showAlert("TIDAK DIREKOMENDASIKAN", "Makanan anda tidak direkomendasikan") {}
+                                    } else {
+                                        moveToResult(currentImageUri.toString(), data)
+                                    }
+                                } else {
+                                    showToast("Failed to convert confidence score to float")
+                                }
+
                             } else {
                                 showToast(getString(R.string.error_null_data))
                             }
