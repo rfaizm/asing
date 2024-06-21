@@ -17,6 +17,23 @@
         <item name="android:fontFamily">@font/manrope_regular</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/dark_green</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorSecondaryVariant">@color/green</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/primary</item>x
+        <!-- Font Family. -->
+        <item name="android:fontFamily">@font/manrope_regular</item>
+    </style>
+
     <style name="GreenTextWhiteBackgroundButton">
         <item name="android:background">@drawable/button_secondary</item>
         <item name="android:textColor">@color/primary</item>

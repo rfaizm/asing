@@ -27,6 +27,7 @@ import com.example.capstone.ui.home.history.HistoryViewModel
 import com.example.capstone.ui.main.MainActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
+
 class DetailAnalyzeActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityDetailAnalyzeBinding
@@ -47,6 +48,7 @@ class DetailAnalyzeActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         database = AnalyzeDatabase.getDatabase(applicationContext)
         historyViewModel = ViewModelProvider(this, ViewModelFactory.getInstance(this))[HistoryViewModel::class.java]
 
@@ -54,11 +56,6 @@ class DetailAnalyzeActivity : AppCompatActivity() {
         val nutrition = intent.getStringExtra("NUTRITION")
         val confidenceScore = intent.getStringExtra("CONFIDENCE_SCORE") ?: "0"
         val imageUriString = intent.getStringExtra("IMAGE_URI")
-
-        Log.d("DetailAnalyzeActivity", "analyzeResult: $analyzeResult")
-        Log.d("DetailAnalyzeActivity", "nutrition: $nutrition")
-        Log.d("DetailAnalyzeActivity", "confidenceScore: $confidenceScore")
-        Log.d("DetailAnalyzeActivity", "imageUriString: $imageUriString")
 
         if (analyzeResult != null && imageUriString != null) {
             if (nutrition != null) {
@@ -72,6 +69,10 @@ class DetailAnalyzeActivity : AppCompatActivity() {
         if (imageUri != null) {
         } else {
             showToast("Gagal memuat gambar.")
+        }
+
+        binding.ibBack.setOnClickListener {
+            finish()
         }
 
         setupAction()

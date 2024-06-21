@@ -7,6 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.detail.ProfileUpdateActivity">
 
+    <ImageButton
+        android:id="@+id/ib_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="32dp"
+        android:background="@color/white"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintBottom_toTopOf="@+id/tv_update_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_update_profile"
         style="@style/textBold"

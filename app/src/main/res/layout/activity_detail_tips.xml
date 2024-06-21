@@ -9,6 +9,17 @@
     android:padding="16dp"
     tools:context=".ui.tips.detail.DetailTipsActivity">
 
+    <ImageButton
+        android:id="@+id/ib_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@color/white"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintBottom_toTopOf="@+id/tv_tips_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_tips_title"
         style="@style/textBold"
@@ -19,7 +30,7 @@
         android:text="@string/tips_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/ib_back" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_tips"

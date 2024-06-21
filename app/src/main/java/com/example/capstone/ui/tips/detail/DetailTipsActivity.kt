@@ -23,7 +23,6 @@ class DetailTipsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val tipId = intent.getStringExtra("TIP_ID") ?: ""
-        Log.d("DetailTipsActivity", "Received Tip ID: $tipId")
 
         viewModel.detailTips.observe(this, Observer { result ->
             when (result) {
@@ -43,6 +42,10 @@ class DetailTipsActivity : AppCompatActivity() {
             viewModel.getDetailTips(tipId)
         } else {
             Toast.makeText(this, "ID tip tidak tersedia", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.ibBack.setOnClickListener {
+            finish()
         }
     }
 

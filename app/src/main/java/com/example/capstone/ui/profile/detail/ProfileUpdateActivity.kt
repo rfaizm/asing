@@ -43,7 +43,9 @@ class ProfileUpdateActivity : AppCompatActivity() {
             setupActionEdit()
         }
 
-
+        binding.ibBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun setupActionEdit() {
