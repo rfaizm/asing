@@ -39,6 +39,18 @@ class ProfileUpdateActivity : AppCompatActivity() {
             insets
         }
 
+        val fullName = intent.getStringExtra("fullName")
+        val age = intent.getIntExtra("age", 0)
+        val height = intent.getFloatExtra("height", 0f)
+        val weight = intent.getFloatExtra("weight", 0f)
+        val circleHand = intent.getFloatExtra("circleHand", 0f)
+
+        binding.fullnameEditText.setText(fullName)
+        binding.ageEditText.setText(age.toString())
+        binding.bodyheightEditText.setText(height.toString())
+        binding.bodyweightEditText.setText(weight.toString())
+        binding.circleHandEditText.setText(circleHand.toString())
+
         binding.buttonSave.setOnClickListener {
             setupActionEdit()
         }

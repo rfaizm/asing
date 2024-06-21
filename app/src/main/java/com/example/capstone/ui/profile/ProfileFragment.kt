@@ -2,6 +2,7 @@ package com.example.capstone.ui.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,8 +50,20 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btnEdit.setOnClickListener {
-            val intent = Intent(activity, ProfileUpdateActivity::class.java)
-            startActivity(intent)
+            viewModel.getSession().observe(viewLifecycleOwner) { user ->
+                if (user != null) {
+                    val intent = Intent(activity, ProfileUpdateActivity::class.java).apply {
+                        putExtra("fullName", user.name)
+                        putExtra("age", user.age)
+                        putExtra("height", user.height)
+                        putExtra("weight", user.weight)
+                        putExtra("circleHand", user.handCircle)
+                    }
+                    startActivity(intent)
+                } else {
+                    Log.e("ProfileFragment", "User data is null")
+                }
+            }
         }
     }
 
