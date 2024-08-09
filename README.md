@@ -10,3 +10,6 @@ This project aims to address the issue of stunting in Indonesia by developing a 
 - Programming Language: Kotlin
 - Networking: Retrofit, OkHttp
 - ViewModel/LiveData
+
+### Full Documentation 
+[Full Documentation](https://github.com/ASING-Awas-Stunting/)
